@@ -68,7 +68,8 @@ test('async actions', () => {
     },
     actions: {
       asyncAdd(params) {
-        return async ({ dispatcher, getState, state }) => {
+        return async ({ dispatcher, getState, state, eventBus }) => {
+          expect(eventBus).toBeInstanceOf(Object);
           expect(getState()).toEqual({ n: { count: 0 } });
           expect(state).toEqual({ count: 0 });
           const data = await new Promise(resolve => {
@@ -83,7 +84,7 @@ test('async actions', () => {
     },
   });
   wepyx.start();
-  expect.assertions(4);
+  expect.assertions(5);
   return wepyx.dispatcher.n.asyncAdd(10).then(result => {
     expect(result).toBe('done');
     expect(wepyx._store.getState().n).toEqual({ count: 10 });
@@ -134,7 +135,8 @@ test('setups', done => {
       add() {},
     },
     setups: {
-      f({ take, dispatcher }) {
+      f({ take, dispatcher, eventBus }) {
+        expect(eventBus).toBeInstanceOf(Object);
         expect(take).toBeInstanceOf(Object);
         expect(dispatcher).toBeInstanceOf(Object);
         expect(dispatcher.add).toBeInstanceOf(Function);
@@ -231,5 +233,5 @@ test('mutations return new state', () => {
   });
   wepyx.start();
   wepyx.dispatcher.n.add(1);
-  expect(wepyx._store.getState().n).toEqual(1)
+  expect(wepyx._store.getState().n).toEqual(1);
 });

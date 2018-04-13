@@ -160,6 +160,7 @@ const wepyx = {
         this._setups[namespace][sName].call(this, {
           dispatcher: this._composeDispatcher[namespace],
           take: this._takes[namespace],
+          eventBus,
         });
       }
     }
