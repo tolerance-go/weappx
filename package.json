@@ -9,7 +9,6 @@
   "license": "MIT",
   "scripts": {
     "rg": "node scripts/replace.js",
-    "prepublish": "npm test && npm run build && npm run rg",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "test": "jest --coverage ",
     "build": "cross-env NODE_ENV=production babel src -d lib",
