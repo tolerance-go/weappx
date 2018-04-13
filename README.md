@@ -27,7 +27,7 @@ npm install wepyx
 - "redux-actions": "^2.2.1",
 - "redux-promise": "^0.5.3",
 - "wepy-redux": "^1.5.3",
-+ "wepyx": "^0.1.0"
++ "wepyx": "^1.0.0"
 }
 ```
 
