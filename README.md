@@ -133,10 +133,11 @@ methods = {
 
 6. `npm run dev` 打开微信开发者工具，选择 `examples`，进行调试吧
 
-# [Docs](https://github.com/tolerance-go/wepyx/tree/docs/docs)
+# Docs
+https://github.com/tolerance-go/wepyx/tree/master/docs
 
 # Contribution
-[commit guide](https://github.com/tolerance-go/blog/issues/1#issue-313932480)
+https://github.com/tolerance-go/blog/issues/1#issue-313932480
 
 # License
 MIT
