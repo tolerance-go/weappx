@@ -1,0 +1,12 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "useBuiltIns": "usage"
+      }
+    ],
+    "react"
+  ],
+  "plugins": ["add-module-exports"]
+}
