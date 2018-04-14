@@ -96,9 +96,11 @@ Attributes
 
 * `take(type:String) => chained:Promise`
 
-  resolve(action.payload)
-
-监听一次事件，事件发生之后监听会被自动移除；返回一个 Promise 对象
+  监听一次事件，事件发生之后监听会被自动移除；返回一个 Promise 对象；resolve(action.payload)
+  
+  Arguments
+  
+  * type - 监听事件类型
 
 ### `connect`
 
