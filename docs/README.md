@@ -12,33 +12,33 @@ Arguments
 
 Arguments
 
-* `namespace:String` - 命名空间
-* `state:Object` - model 的数据结构
-* `mutations:Object` - 数据的修改[copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)
-  * `handleActionName:String-reducer:Function(state, payload)`
+- `namespace:String` - 命名空间
+- `state:Object` - model 的数据结构
+- `mutations:Object` - 数据的修改[copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)
+  - `handleActionName:String-reducer:Function(state, payload)`
 
-reducer 内部使用 [immer](https://github.com/mweststrate/immer) 进行包装，可以[直接对 state 进行赋值](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/__test__/index.test.js#L19)，支持深度拷贝，[如果直接返回新值会替换原来的 state](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/__test__/index.test.js#L220)
+  reducer 内部使用 [immer](https://github.com/mweststrate/immer) 进行包装，可以[直接对 state 进行赋值](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/__test__/index.test.js#L19)，支持深度拷贝，[如果直接返回新值会替换原来的 state](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/__test__/index.test.js#L220)
 
-自动生成同名的 actionCreator，默认为 [payload => payload](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/src/index.js#L72)
+  自动生成同名的 actionCreator，默认为 [payload => payload](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/src/index.js#L72)
 
-* `actions:Object` - 事件生成器
-  * `actionName:String-actionCreator:Function() => Any|Function({ take:Function, dispatcher:Object, state:Object, getState:Function, eventBus:Object })`
+- `actions:Object` - 事件生成器
+  - `actionName:String-actionCreator:Function() => Any|Function({ take:Function, dispatcher:Object, state:Object, getState:Function, eventBus:Object })`
 
-action 生成器，actionName 如果和 namespace 下的 mutation 属性同名，将会覆盖自动生成的 actionCreator
+    action 生成器，actionName 如果和 namespace 下的 mutation 属性同名，将会覆盖自动生成的 actionCreator
 
-返回函数的参数介绍
-- dispatcher - 参考 `wepyx.dispatcher`，当前 namespace 下的所有 actionCreator，直接挂载于 dispatcher 上，也就是说可以省略 namespace 直接调用: dispatcher[~~namespace~~][actionCreatorName]；如果当前 namespace 下的 actionCreatorName 和全局其他 namespace 名称冲突，保留全局，并发出警告
-- take - 返回一个 promise 对象，可以对 eventBus 上的任何事件进行监听；对当前 namespace 下的 action 进行监听时，可以省略 namespace 前缀，否则会有提示信息打印
-- state - 是当前 namespace 的 model 数据
-- getState - 可以动态获得 rootState
+    返回函数的参数介绍
+    - dispatcher - 参考 `wepyx.dispatcher`，当前 namespace 下的所有 actionCreator，直接挂载于 dispatcher 上，也就是说可以省略 namespace 直接调用: dispatcher[~~namespace~~][actionCreatorName]；如果当前 namespace 下的 actionCreatorName 和全局其他 namespace 名称冲突，保留全局，并发出警告
+    - take - 返回一个 promise 对象，可以对 eventBus 上的任何事件进行监听；对当前 namespace 下的 action 进行监听时，可以省略 namespace 前缀，否则会有提示信息打印
+    - state - 是当前 namespace 的 model 数据
+    - getState - 可以动态获得 rootState
 
-
-* `setups:Object|Function`: 启动器，所有函数在 launch 之后会调用
-  * `key:String-set:Function({ dispatcher:Object, take:Function, eventBus:Object }) => void`
-
-- dispatcher - 参考 actionCreator 返回函数的参数
-- take - 参考 actionCreator 返回函数的参数
-- eventBus - 参考 `wepyx.eventBus`
+- `setups:Object|Function` - 启动器，所有函数在 launch 之后会调用
+  - `key:String-set:Function({ dispatcher:Object, take:Function, eventBus:Object }) => void`
+  
+    参数介绍
+    - dispatcher - 参考 actionCreator 返回函数的参数
+    - take - 参考 actionCreator 返回函数的参数
+    - eventBus - 参考 `wepyx.eventBus`
 
 ### `wepyx.models(models:Array)`
 支持注册数组形式的 model
