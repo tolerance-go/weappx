@@ -26,10 +26,10 @@ reducer 内部使用 [immer](https://github.com/mweststrate/immer) 进行包装�
 
 action 生成器，actionName 如果和 namespace 下的 mutation 属性同名，将会覆盖自动生成的 actionCreator
 
-返回函数的参数介绍
-- dispatcher - 参考 `wepyx.dispatcher`，当前 namespace 下的所有 actionCreator，直接挂载于 dispatcher 上，也就是说可以省略 namespace 直接调用: dispatcher[~~namespace~~][actionCreatorName]；如果当前 namespace 下的 actionCreatorName 和全局其他 namespace 名称冲突，保留全局，并发出警告
-- take - 返回一个 promise 对象，可以对 eventBus 上的任何事件进行监听；对当前 namespace 下的 action 进行监听时，可以省略 namespace 前缀，否则会有提示信息打印
-- state - 是当前 namespace 的 model 数据
+返回函数的参数介绍
+- dispatcher - 参考 `wepyx.dispatcher`，当前 namespace 下的所有 actionCreator，直接挂载于 dispatcher 上，也就是说可以省略 namespace 直接调用: dispatcher[~~namespace~~][actionCreatorName]；如果当前 namespace 下的 actionCreatorName 和全局其他 namespace 名称冲突，保留全局，并发出警告
+- take - 返回一个 promise 对象，可以对 eventBus 上的任何事件进行监听；对当前 namespace 下的 action 进行监听时，可以省略 namespace 前缀，否则会有提示信息打印
+- state - 是当前 namespace 的 model 数据
 - getState - 可以动态获得 rootState
 
 
@@ -48,7 +48,7 @@ action 生成器，actionName 如果和 namespace 下的 mutation 属性同名�
 启动程序，最后调用
 
 ### `wepyx.dispatcher:Object`
-dispatcher 是一个 actionCreator + dispatch 的函数集合对象，所有 namespace 下的 actionCreator 都挂载于上面，调用 `dispatcher[namespace][actionCreatorName](payload)` 将直接派发同名 action，结构如下:
+dispatcher 是一个 actionCreator + dispatch 的函数集合对象，所有 namespace 下的 actionCreator 都挂载于上面，调用 `dispatcher[namespace][actionCreatorName](payload)` 将直接派发同名 action，结构如下:
 ```js
 {
   type: 'namespace/actionName',
