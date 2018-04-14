@@ -85,7 +85,7 @@ export default {
 };
 ```
 
-5. 在视图层用到原先 store 的地方，也要相应修改，打开 `components/counter.wpy`
+5. 在视图层用到原先 store 的地方，也要相应修改，打开 `components/counter.wpy`
 ```js
 - import { connect } from 'wepy-redux'
 - import { INCREMENT, DECREMENT } from '../store/types/counter';
