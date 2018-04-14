@@ -2,49 +2,66 @@
 
 import wepyx, { connect } from 'wepyx'
 
-### `wepyx.init(options)`
+### `wepyx.init(options:Object)`
 
 Arguments
 
 * extraMiddlewares(Array): 额外的中间件
 
-### `wepyx.model(options)`
+### `wepyx.model(options:Object)`
 
 Arguments
 
-* `namespace(String)`: 命名空间
-* `state(Object)`: model 的数据结构
-* `mutations(Object)`: 数据的修改[copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)
-  * `handleActionName(String)-reducer(Function)[state, payload]`
+* `namespace:String` - 命名空间
+* `state:Object` - model 的数据结构
+* `mutations:Object` - 数据的修改[copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)
+  * `handleActionName:String-reducer:Function(state, payload)`
 
 reducer 内部使用 [immer](https://github.com/mweststrate/immer) 进行包装，可以[直接对 state 进行赋值](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/__test__/index.test.js#L19)，支持深度拷贝，[如果直接返回新值会替换原来的 state](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/__test__/index.test.js#L220)
 
 自动生成同名的 actionCreator，默认为 [payload => payload](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/src/index.js#L72)
 
-* `actions(Object)`: 事件生成器
-  * `actionName(String)-actionCreator(Function)[() => object|function[{ take, dispatcher, state, getState, eventBus }]]`
+* `actions:Object` - 事件生成器
+  * `actionName:String-actionCreator:Function() => Any|Function({ take:Function, dispatcher:Object, state:Object, getState:Function, eventBus:Object })`
 
-action 生成器，如果和 namespace 下的 mutation 属性同名，将会覆盖自动生成的 actionCreator
+action 生成器，actionName 如果和 namespace 下的 mutation 属性同名，将会覆盖自动生成的 actionCreator
 
-take 返回一个 promise 对象，可以对 eventBus 上的任何事件进行监听
+返回函数的参数介绍
+- dispatcher - 参考 `wepyx.dispatcher`，当前 namespace 下的所有 actionCreator，直接挂载于 dispatcher 上，也就是说可以省略 namespace 直接调用: dispatcher[~~namespace~~][actionCreatorName]；如果当前 namespace 下的 actionCreatorName 和全局其他 namespace 名称冲突，保留全局，并发出警告
+- take - 返回一个 promise 对象，可以对 eventBus 上的任何事件进行监听；对当前 namespace 下的 action 进行监听时，可以省略 namespace 前缀，否则会有提示信息打印
+- state - 是当前 namespace 的 model 数据
+- getState - 可以动态获得 rootState
 
-state 是当前 model 的数据，getState 动态获得 rootState
 
-* `setups(Object|Function)`: 启动器，所有函数在 launch 之后会调用
-  * `key(String)-set(Function)[({ dispatcher, take, eventBus }) => void]`
+* `setups:Object|Function`: 启动器，所有函数在 launch 之后会调用
+  * `key:String-set:Function({ dispatcher:Object, take:Function, eventBus:Object }) => void`
 
-### `wepyx.models(models)`
+- dispatcher - 参考 actionCreator 返回函数的参数
+- take - 参考 actionCreator 返回函数的参数
+- eventBus - 参考 `wepyx.eventBus`
+
+### `wepyx.models(models:Array)`
 支持注册数组形式的 model
 
 ### `wepyx.start()`
 
 启动程序，最后调用
 
-### `wepyx.eventBus`
+### `wepyx.dispatcher:Object`
+dispatcher 是一个 actionCreator + dispatch 的函数集合对象，所有 namespace 下的 actionCreator 都挂载于上面，调用 `dispatcher[namespace][actionCreatorName](payload)` 将直接派发同名 action，结构如下:
+```js
+{
+  type: 'namespace/actionName',
+  payload,
+  meta
+}
+```
+
+### `wepyx.eventBus:Object`
 
 这是一个内部实现需要的 事件中心，take 就是基于它实现的。所有的 redux action 都会自动派发响应事件名，store 变化之后，会派发 `${actionName}:after` 事件
 
-`eventBus.listen(type, cb, [scope]) => unlisten(Function)`
+`eventBus.listen(type:String, cb:Function, [scope:Object]) => unlisten:Function`
 
 监听事件，注册回调函数
 - type - 监听事件类型
@@ -52,13 +69,13 @@ state 是当前 model 的数据，getState 动态获得 rootState
 - scope - cb 调用时的执行对象
 - 调用 `unlisten`，解除监听
 
-`eventBus.emit(type, payload)`
+`eventBus.emit(type:String, payload:Any)`
 
 派发事件，触发注册回调
 - type - 触发事件类型
 - payload - 触发回调的参数
 
-`eventBus.take(type) => chained(Promise)`
+`eventBus.take(type:String) => chained:Promise`
 
 监听一次事件，事件发生之后监听会被自动移除；返回一个 Promise 对象
 
