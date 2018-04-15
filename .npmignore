@@ -1,0 +1,10 @@
+__test__
+.vscode
+coverage
+src
+.babelrc
+.eslintrc*
+.gitignore
+.prettierrc
+package-lock.json
+.travis*
