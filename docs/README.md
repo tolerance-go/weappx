@@ -109,9 +109,17 @@ Attributes
 
 ### 全局的 `loading model`
 
-默认会注册一个 `namespace` 为 `loading` 的全局 model，当派发异步 action 的时候，对应的 `loading[namespace]` 和 `loading[${namespace}/${actionName}]` 还有 `loading.global` 将设置设置成 `true`，结束的时候会设置为 `false`；如果 `namespace` 下属只要有一个异步 action 还没有完成，它的状态就始终是 `loading` 状态；如果有一个 `namespace` 没有结束，那么 `global` 就始终是 `loading` 状态；
+默认会注册一个 `namespace` 为 `loading` 的全局 model，当派发异步 action 的时候，对应的 `loading[namespace]` 和 `loading[${namespace}/${actionName}]` 还有 `loading.global` 将设置设置成 `true`。
+
+结束的时候会设置为 `false`；如果 `namespace` 下属只要有一个异步 action 还没有完成，它的状态就始终是 `loading` 状态。
+
+如果有一个 `namespace` 没有结束，那么 `global` 就始终是 `loading` 状态。
 
 # Update log
+
+### 1.3.0 (2018-04-19)
+
+* [feat - 增加 loading.global 状态](https://github.com/tolerance-go/wepyx/commit/ddb9778e703b03cbabad0b978bab1cf16d6eb953)
 
 ### 1.2.0 (2018-04-19)
 

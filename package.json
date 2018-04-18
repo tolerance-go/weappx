@@ -1,6 +1,6 @@
 {
   "name": "wepyx",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "wepyx is a lightweight front-end framework based on redux, redux-actions.(Inspired by [dva](https://github.com/dvajs/dva) and [vuex](https://github.com/vuejs/vuex))",
   "repository": "https://github.com/tolerance-go/wepyx",
   "main": "lib/index.js",
