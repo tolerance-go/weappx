@@ -111,7 +111,12 @@ Attributes
 
 默认会注册一个 `namespace` 为 `loading` 的全局 model，当派发异步 action 的时候，对应的 `loading[namespace]` 和 `loading[${namespace}/${actionName}]` 将设置设置成 `true`，结束的时候会设置为 `false`；如果 `namespace` 下属只要有一个异步 action 还没有完成，它的状态就始终是 `loading` 状态
 
+
 # Update log
+
+### 1.2.0 (2018-04-19)
+
+# [feat - 增加 loading 状态管理功能](https://github.com/tolerance-go/wepyx/blob/d0ed705b479a08ba1c187d73d4c8ad520f01bbf6/__test__/index.test.js#L240)
 
 ### 1.1.0 (2018-04-13)
 
