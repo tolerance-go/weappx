@@ -6,6 +6,7 @@ import thunkMiddleware from './tunkMiddleware';
 import produce from 'immer';
 import { globalObject } from './global';
 import assert from './utils/assert';
+import some from './utils/some';
 
 const SPLIT = '/';
 
@@ -55,12 +56,9 @@ const wepyx = {
     models.forEach(model => this.model(model));
   },
 
-  model(options) {
+  _model(options) {
     const { namespace, state = {}, mutations = {}, actions = {} } = options;
     let { setups = {} } = options;
-
-    assert(namespace, `model namespace must be exsit`);
-    assert(undefined === this._models[namespace], `model[namespace=${namespace}] must be union`);
 
     this._models[namespace] = namespace;
 
@@ -96,6 +94,19 @@ const wepyx = {
     this._setups[namespace] = setups;
   },
 
+  model(options) {
+    const { namespace } = options;
+
+    assert(
+      false === ['global', 'loading'].includes(namespace),
+      `model namespace:${namespace} is reserved; please use other namespace`
+    );
+    assert(namespace, `model namespace must be exsit`);
+    assert(undefined === this._models[namespace], `model[namespace=${namespace}] must be union`);
+
+    this._model(options);
+  },
+
   start() {
     // effect for model just for test so put model to here
     const loadingModel = {
@@ -123,12 +134,14 @@ const wepyx = {
           }
 
           state[namespace] = !!loadingCounts[namespace];
+
+          state.global = some(loadingCounts);
         },
       },
     };
 
     // default upload loadingModel
-    this.model(loadingModel);
+    this._model(loadingModel);
 
     const rootReducer = combineReducers(this._reducers);
 
