@@ -19,12 +19,12 @@ model Attributes
 * `namespace:String` - 命名空间
 * `state:Object` - model 的数据结构
 * `mutations:Object` - 数据的修改[copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)
-   
-   * `handleActionName:String-reducer:Function(state, payload)`
 
-      reducer 内部使用 [immer](https://github.com/mweststrate/immer) 进行包装，可以[直接对 state 进行赋值](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/__test__/index.test.js#L19)，支持深度拷贝，[如果直接返回新值会替换原来的 state](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/__test__/index.test.js#L220)
+  * `handleActionName:String-reducer:Function(state, payload)`
 
-      自动生成同名的 actionCreator，默认为 [payload => payload](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/src/index.js#L72)
+    reducer 内部使用 [immer](https://github.com/mweststrate/immer) 进行包装，可以[直接对 state 进行赋值](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/__test__/index.test.js#L19)，支持深度拷贝，[如果直接返回新值会替换原来的 state](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/__test__/index.test.js#L220)
+
+    自动生成同名的 actionCreator，默认为 [payload => payload](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/src/index.js#L72)
 
 * `actions:Object` - 事件生成器
 
@@ -63,8 +63,8 @@ dispatcher 是一个 actionCreator + dispatch 的函数集合对象，所有 nam
 
 ```js
 {
-  type: 'namespace/actionName', 
-  payload, 
+  type: 'namespace/actionName',
+  payload,
   meta,
 }
 ```
@@ -98,14 +98,18 @@ Attributes
 * `take(type:String) => chained:Promise`
 
   监听一次事件，事件发生之后监听会被自动移除；返回一个 Promise 对象；resolve(action.payload)
-  
+
   Arguments
-  
+
   * type - 监听事件类型
 
 ### `connect`
 
 基于 [`wepy-redux`](https://github.com/Tencent/wepy/tree/2.0.x/packages/wepy-redux#wepy-%E5%92%8C-redux-%E7%BB%93%E5%90%88%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%99%A8)，另外融入了 dispatcher，可以在 connect 过后的组件内部，使用 [`this.dispatcher`](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/examples/src/components/counter.wpy#L80)，去除了第二个参数。
+
+### 全局的 `loading model`
+
+默认会注册一个 `namespace` 为 `loading` 的全局 model，当派发异步 action 的时候，对应的 `loading[namespace]` 和 `loading[${namespace}/${actionName}]` 将设置设置成 `true`，结束的时候会设置为 `false`；如果 `namespace` 下属只要有一个异步 action 还没有完成，它的状态就始终是 `loading` 状态
 
 # Update log
 

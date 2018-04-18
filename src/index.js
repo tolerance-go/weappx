@@ -97,6 +97,39 @@ const wepyx = {
   },
 
   start() {
+    // effect for model just for test so put model to here
+    const loadingModel = {
+      namespace: 'loading',
+
+      state: {
+        '@namespaceLoadingCounts': {},
+      },
+
+      mutations: {
+        save(state, { actionType, loading }) {
+          state[actionType] = loading;
+
+          const [namespace, actionCreatorName] = actionType.split(SPLIT);
+          const loadingCounts = state['@namespaceLoadingCounts'];
+
+          if (!loadingCounts[namespace]) {
+            loadingCounts[namespace] = 0;
+          }
+
+          if (loading) {
+            loadingCounts[namespace]++;
+          } else {
+            loadingCounts[namespace]--;
+          }
+
+          state[namespace] = !!loadingCounts[namespace];
+        },
+      },
+    };
+
+    // default upload loadingModel
+    this.model(loadingModel);
+
     const rootReducer = combineReducers(this._reducers);
 
     const middlewares = [thunkMiddleware, actionTakeMiddleware].concat(this._extraEnhancers);

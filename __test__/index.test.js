@@ -1,5 +1,6 @@
 /* global test, expect, afterEach */
 import wepyx, { _clean, connect } from '../src/index';
+import { delay } from './helper';
 
 afterEach(() => {
   _clean();
@@ -70,7 +71,7 @@ test('async actions', () => {
       asyncAdd(params) {
         return async ({ dispatcher, getState, state, eventBus }) => {
           expect(eventBus).toBeInstanceOf(Object);
-          expect(getState()).toEqual({ n: { count: 0 } });
+          expect(getState().n).toEqual({ count: 0 });
           expect(state).toEqual({ count: 0 });
           const data = await new Promise(resolve => {
             setTimeout(() => {
@@ -234,4 +235,43 @@ test('mutations return new state', () => {
   wepyx.start();
   wepyx.dispatcher.n.add(1);
   expect(wepyx._store.getState().n).toEqual(1);
+});
+
+test('model loading', done => {
+  wepyx.model({
+    namespace: 'n',
+    mutations: {
+      add(state, payload) {
+        state.count += payload;
+      },
+    },
+    actions: {
+      asyncAdd() {
+        return async ({ take }) => {
+          const data = await delay(200);
+        };
+      },
+      asyncAdd2() {
+        return async ({ take }) => {
+          const data = await delay(400);
+        };
+      },
+    },
+  });
+  wepyx.start();
+  const getState = wepyx._store.getState
+  
+  expect(getState().loading.n).toBeFalsy();
+  expect(getState().loading['n/asyncAdd']).toBeFalsy();
+  wepyx.dispatcher.n.asyncAdd().then(() => {
+    expect(getState().loading.n).toBeTruthy();
+    expect(getState().loading['n/asyncAdd']).toBeFalsy();
+  });
+  wepyx.dispatcher.n.asyncAdd2().then(() => {
+    expect(getState().loading.n).toBeFalsy();
+    expect(getState().loading['n/asyncAdd2']).toBeFalsy();
+    done();
+  });
+  expect(getState().loading.n).toBeTruthy();
+  expect(getState().loading['n/asyncAdd']).toBeTruthy();
 });
