@@ -116,7 +116,7 @@ Attributes
 
 ### 1.2.0 (2018-04-19)
 
-### [feat - 增加 loading 状态管理功能](https://github.com/tolerance-go/wepyx/blob/d0ed705b479a08ba1c187d73d4c8ad520f01bbf6/__test__/index.test.js#L240)
+* [feat - 增加 loading 状态管理功能](https://github.com/tolerance-go/wepyx/blob/d0ed705b479a08ba1c187d73d4c8ad520f01bbf6/__test__/index.test.js#L240)
 
 ### 1.1.0 (2018-04-13)
 
