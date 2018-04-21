@@ -118,6 +118,10 @@ Attributes
 
 # Update log
 
+### 1.4.0 (2018-04-21)
+
+* [feat - 增加 onError hook](https://github.com/tolerance-go/wepyx/blob/772cf0a745b00683ada16f210dfa1e470aa9847b/__test__/effect.test.js#L23)
+
 ### 1.3.0 (2018-04-19)
 
 * [feat - 增加 loading.global 状态](https://github.com/tolerance-go/wepyx/commit/ddb9778e703b03cbabad0b978bab1cf16d6eb953)
