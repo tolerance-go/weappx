@@ -2,7 +2,7 @@ import eventBus from './eventBus';
 
 const thunkMiddleware = ({ dispatch, getState }) => next => action => {
   if (action.meta && action.payload && typeof action.payload === 'function') {
-    const { namespace, composeDispatcher, takes } = action.meta;
+    const { namespace, wepyxScope } = action.meta;
     const changeLoading = loading =>
       dispatch({
         type: 'loading/save',
@@ -13,8 +13,8 @@ const thunkMiddleware = ({ dispatch, getState }) => next => action => {
 
     return action
       .payload({
-        dispatcher: composeDispatcher[namespace],
-        take: takes[namespace],
+        dispatcher: wepyxScope._composeDispatcher[namespace],
+        take: wepyxScope._takes[namespace],
         getState,
         state: getState()[namespace],
         eventBus,
@@ -22,6 +22,9 @@ const thunkMiddleware = ({ dispatch, getState }) => next => action => {
       .then(result => {
         changeLoading(false);
         return result;
+      })
+      .catch(error => {
+        return wepyxScope._effectsErrorDefaultHandle.call(wepyxScope, error);
       });
   }
 

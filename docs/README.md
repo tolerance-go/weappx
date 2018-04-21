@@ -9,6 +9,7 @@ import wepyx, { connect } from 'wepyx'
 options Attributes
 
 * extraMiddlewares(Array): 额外的中间件
+* onError(Function): 异步 action 内抛出的错误可以在这里统一处理
 
 ### `wepyx.model(model:Object)`
 

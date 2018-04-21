@@ -34,22 +34,34 @@ const produceWrapp = cb => {
 
 const wepyx = {
   eventBus,
+  dispatcher: {},
+  
   _setups: {},
   _actions: {},
   _models: {},
   _reducers: {},
-  dispatcher: {},
   // 待注入到 thunk 的 dispatcher namespace maps
   _composeDispatcher: {},
   // 待注入到 thunk 的 take namespace maps
   _takes: {},
   _store: undefined,
   _extraEnhancers: [],
+  _effectsErrorDefaultHandle: error => {
+    throw error;
+  },
 
   init(options) {
-    const { extraMiddlewares } = options;
-    assert(Array.isArray(extraMiddlewares), 'extraMiddlewares type must be Array');
-    this._extraEnhancers = extraMiddlewares;
+    const { extraMiddlewares, onError } = options;
+
+    if (extraMiddlewares) {
+      assert(Array.isArray(extraMiddlewares), 'extraMiddlewares type must be Array');
+      this._extraEnhancers = extraMiddlewares;
+    }
+
+    if (onError) {
+      assert(typeof onError === 'function', 'onError type must be Function');
+      this._effectsErrorDefaultHandle = onError;
+    }
   },
 
   models(models) {
@@ -80,8 +92,7 @@ const wepyx = {
       // this._composeDispatcher[namespace] 不可以在此取值，它只是容器，是动态添值的
       const metaCreator = () => ({
         namespace,
-        composeDispatcher: this._composeDispatcher,
-        takes: this._takes,
+        wepyxScope: this,
       });
       actions[actionName] = [payloadCreator, metaCreator];
     }
@@ -228,6 +239,9 @@ const _clean = () => {
   wepyx._store = undefined;
   wepyx._composeDispatcher = {};
   wepyx._extraEnhancers = [];
+  wepyx._effectsErrorDefaultHandle = error => {
+    throw error;
+  };
   globalObject._dispatcher = wepyx.dispatcher = {};
 };
 
