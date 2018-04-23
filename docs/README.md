@@ -119,6 +119,10 @@ Attributes
 
 # Update log
 
+### 1.4.1 (2018-04-23)
+
+* [perf - effects 注入额外参数 loading model](https://github.com/tolerance-go/wepyx/commit/eb9eb8d748248319165b13f856ad36a3d4011ad5)
+
 ### 1.4.0 (2018-04-21)
 
 * [feat - 增加 onError hook](https://github.com/tolerance-go/wepyx/blob/772cf0a745b00683ada16f210dfa1e470aa9847b/__test__/effect.test.js#L23)
