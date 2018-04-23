@@ -48,8 +48,8 @@ test('loading state', done => {
     state: {},
     actions: {
       add() {
-        return async ({ dispatcher, state, getState }) => {
-          if (getState().loading['n/add']) return;
+        return async ({ dispatcher, state, getState, loading }) => {
+          if (loading['n/add']) return;
           await await delay(1000);
           done();
         };

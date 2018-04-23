@@ -29,7 +29,7 @@ model Attributes
 
 * `actions:Object` - 事件生成器
 
-  * `actionName:String-actionCreator:Function() => Any|Function({ take:Function, dispatcher:Object, state:Object, getState:Function, eventBus:Object })`
+  * `actionName:String-actionCreator:Function() => Any|Function({ take:Function, dispatcher:Object, state:Object, loading:Object, getState:Function, eventBus:Object })`
 
     action 生成器，actionName 如果和 namespace 下的 mutation 属性同名，将会覆盖自动生成的 actionCreator
 
@@ -39,6 +39,7 @@ model Attributes
     * take - 返回一个 promise 对象，可以对 eventBus 上的任何事件进行监听；对当前 namespace 下的 action 进行监听时，可以省略 namespace 前缀，否则会有提示信息打印
     * state - 是当前 namespace 的 model 数据
     * getState - 可以动态获得 rootState
+    * loading - 是全局的 loading model
 
 * `setups:Object|Function` - 启动器，所有函数在 launch 之后会调用
 

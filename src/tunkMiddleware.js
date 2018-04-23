@@ -15,6 +15,7 @@ const thunkMiddleware = ({ dispatch, getState }) => next => action => {
         take: wepyxScope._takes[namespace],
         getState,
         state: getState()[namespace],
+        loading: getState()['loading'],
         eventBus,
       })
       .then(result => {
