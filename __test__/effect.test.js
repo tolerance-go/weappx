@@ -1,8 +1,5 @@
 /* global test, expect, afterEach */
-import wepyx, { _clean, connect } from '../src/index';
-import { delay } from './helper';
-import { ERANGE } from 'constants';
-import { debug } from 'util';
+import wepyx, { _clean } from '../src/index';
 
 afterEach(() => {
   _clean();

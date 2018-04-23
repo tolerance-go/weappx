@@ -25,7 +25,7 @@ const thunkMiddleware = ({ dispatch, getState }) => next => action => {
         return result;
       })
       .catch(error => {
-        return wepyxScope._effectsErrorDefaultHandle.call(wepyxScope, error);
+        return wepyxScope._effectsErrorDefaultHandle(error);
       });
   }
 

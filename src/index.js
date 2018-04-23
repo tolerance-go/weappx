@@ -110,7 +110,7 @@ const wepyx = {
     const { namespace } = options;
 
     assert(
-      false === ['global', 'loading'].includes(namespace),
+      ['global', 'loading'].includes(namespace) === false,
       `model namespace:${namespace} is reserved; please use other namespace`
     );
     assert(namespace, `model namespace must be exsit`);
@@ -132,7 +132,7 @@ const wepyx = {
         save(state, { actionType, loading }) {
           state[actionType] = loading;
 
-          const [namespace, actionCreatorName] = actionType.split(SPLIT);
+          const [namespace, actionCreatorName] = actionType.split(SPLIT); // eslint-disable-line
           const loadingCounts = state['@namespaceLoadingCounts'];
 
           if (!loadingCounts[namespace]) {
@@ -197,7 +197,7 @@ const wepyx = {
 
     Object.keys(this._models).forEach(namespace => {
       const take = type => {
-        if (new RegExp(`${namespace}\/.*`, 'ig').test(type)) {
+        if (new RegExp(`${namespace}/.*`, 'ig').test(type)) {
           console.warn(
             `take action type:${type}, You don't have to add a prefix when you operate under the current model[namespace:${namespace}].`
           );

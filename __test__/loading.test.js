@@ -1,5 +1,5 @@
 /* global test, expect, afterEach */
-import wepyx, { _clean, connect } from '../src/index';
+import wepyx, { _clean } from '../src/index';
 import { delay } from './helper';
 
 afterEach(() => {
@@ -33,12 +33,12 @@ test('model loading', done => {
     actions: {
       asyncAdd() {
         return async ({ take }) => {
-          const data = await delay(200);
+          await delay(200);
         };
       },
       asyncAdd2() {
         return async ({ take }) => {
-          const data = await delay(400);
+          await delay(400);
         };
       },
     },

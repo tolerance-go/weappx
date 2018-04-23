@@ -1,6 +1,5 @@
 /* global test, expect, afterEach */
 import wepyx, { _clean, connect } from '../src/index';
-import { delay } from './helper';
 
 afterEach(() => {
   _clean();
@@ -205,7 +204,7 @@ test('action after', done => {
       asyncAdd() {
         return async ({ take, getState }) => {
           expect(getState().n).toEqual({ count: 0 });
-          const data = await take('add:after');
+          await take('add:after');
           expect(getState().n).toEqual({ count: 1 });
           done();
         };

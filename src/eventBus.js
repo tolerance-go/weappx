@@ -11,7 +11,7 @@ const eventBus = {
   listen(type, cb, scope) {
     let index;
     if (typeof this._listeners[type] !== 'undefined') {
-      index = listeners.length;
+      index = this._listeners.length;
       this._listeners[type].push({ scope, cb });
     } else {
       index = 0;
