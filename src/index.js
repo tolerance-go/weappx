@@ -45,6 +45,7 @@ const wepyx = {
   // 待注入到 thunk 的 take namespace maps
   _takes: {},
   _store: undefined,
+  _extraMiddlewares: [],
   _extraEnhancers: [],
   _effectsErrorDefaultHandle: error => {
     throw error;
@@ -55,7 +56,7 @@ const wepyx = {
 
     if (extraMiddlewares) {
       assert(Array.isArray(extraMiddlewares), 'extraMiddlewares type must be Array');
-      this._extraEnhancers = extraMiddlewares;
+      this._extraMiddlewares = extraMiddlewares;
     }
 
     if (onError) {
@@ -156,7 +157,7 @@ const wepyx = {
 
     const rootReducer = combineReducers(this._reducers);
 
-    const middlewares = [thunkMiddleware, actionTakeMiddleware].concat(this._extraEnhancers);
+    const middlewares = [thunkMiddleware, actionTakeMiddleware].concat(this._extraMiddlewares);
 
     const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
@@ -238,6 +239,7 @@ const _clean = () => {
   wepyx._reducers = {};
   wepyx._store = undefined;
   wepyx._composeDispatcher = {};
+  wepyx._extraMiddlewares = [];
   wepyx._extraEnhancers = [];
   wepyx._effectsErrorDefaultHandle = error => {
     throw error;
