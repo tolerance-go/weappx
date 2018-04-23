@@ -2,6 +2,7 @@ import eventBus from './eventBus';
 
 const thunkMiddleware = ({ dispatch, getState }) => next => action => {
   if (action.meta && action.payload && typeof action.payload === 'function') {
+    const rootState = getState();
     const { namespace, wepyxScope } = action.meta;
     const changeLoading = loading =>
       dispatch({
@@ -16,8 +17,8 @@ const thunkMiddleware = ({ dispatch, getState }) => next => action => {
         dispatcher: wepyxScope._composeDispatcher[namespace],
         take: wepyxScope._takes[namespace],
         getState,
-        state: getState()[namespace],
-        loading: getState()['loading'],
+        state: rootState[namespace],
+        loading: rootState['loading'],
         eventBus,
       })
       .then(result => {
