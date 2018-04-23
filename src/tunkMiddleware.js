@@ -9,9 +9,7 @@ const thunkMiddleware = ({ dispatch, getState }) => next => action => {
         payload: { actionType: action.type, loading },
       });
 
-    changeLoading(true);
-
-    return action
+    const returnValue = action
       .payload({
         dispatcher: wepyxScope._composeDispatcher[namespace],
         take: wepyxScope._takes[namespace],
@@ -26,6 +24,10 @@ const thunkMiddleware = ({ dispatch, getState }) => next => action => {
       .catch(error => {
         return wepyxScope._effectsErrorDefaultHandle.call(wepyxScope, error);
       });
+
+    changeLoading(true);
+
+    return returnValue;
   }
 
   return next(action);

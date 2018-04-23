@@ -41,3 +41,21 @@ test('onError work', done => {
   wepyx.start();
   wepyx.dispatcher.n.add();
 });
+
+test('loading state', done => {
+  wepyx.model({
+    namespace: 'n',
+    state: {},
+    actions: {
+      add() {
+        return async ({ dispatcher, state, getState }) => {
+          if (getState().loading['n/add']) return;
+          await await delay(1000);
+          done();
+        };
+      },
+    },
+  });
+  wepyx.start();
+  wepyx.dispatcher.n.add();
+});

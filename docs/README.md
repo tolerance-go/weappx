@@ -106,7 +106,7 @@ Attributes
 
 ### `connect`
 
-基于 [`wepy-redux`](https://github.com/Tencent/wepy/tree/2.0.x/packages/wepy-redux#wepy-%E5%92%8C-redux-%E7%BB%93%E5%90%88%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%99%A8)，另外融入了 dispatcher，可以在 connect 过后的组件内部，使用 [`this.dispatcher`](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/examples/src/components/counter.wpy#L80)，去除了第二个参数。
+基于 [`wepy-redux`](https://github.com/Tencent/wepy/tree/2.0.x/packages/wepy-redux#wepy-%E5%92%8C-redux-%E7%BB%93%E5%90%88%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%99%A8)，另外融入了 dispatcher，可以在 connect 过后的组件内部，使用 [`this.dispatcher`](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/examples/src/components/counter.wpy#L80)；并且去除了第二个参数。
 
 ### 全局的 `loading model`
 
@@ -115,6 +115,64 @@ Attributes
 结束的时候会设置为 `false`；如果 `namespace` 下属只要有一个异步 action 还没有完成，它的状态就始终是 `loading` 状态。
 
 如果有一个 `namespace` 没有结束，那么 `global` 就始终是 `loading` 状态。
+
+#### loading - 进行时的状态
+假设我们现在有有一个需求：派发 `action` 请求后端接口，请求成功后，正确处理返回结果；
+
+如果当前正在 `loading` 或者已经没有更多数据了，就立即返回，下面是实现代码
+```js
+{
+  namespace: 'home',
+  state: {},
+  mutations: {
+    getPanelsSuccess() {
+      ...
+    }
+  },
+  actions: {
+    getPanels() {
+      return async ({ dispatcher, state, getState, loading }) => {
+        if (loading['home/getPanels'] || !state.panels.hasMore) return;
+        await delay(1000);
+        const { success, data } = await homeService.getPanels({ offset: state.panels.offset });
+        if (success) {
+          dispatcher.getPanelsSuccess(data);
+        }
+      };
+    }
+  }
+}
+```
+我们在外部派发 `action` 来主动拉取数据，但是结局却出乎意料，代码直接结束了，因为在判断 `loading['home/getPanels']` 的时候，其值为 `true`；
+
+这牵扯到一个问题，举个例子，如果我准备打沙袋这个动作是一个持续性的，那么只有我的拳头碰到沙袋那一瞬间之后直到拳头离开沙袋，这个时期的状态才是 `loading`；
+
+之前 `thunkMiddleware` 的部分实现如下：
+```js
+changeLoading(true);
+
+return action.payload({
+    dispatcher: wepyxScope._composeDispatcher[namespace],
+    take: wepyxScope._takes[namespace],
+    getState,
+    state: getState()[namespace],
+    eventBus,
+  }).then(result => {
+    changeLoading(false);
+    return result;
+  })
+```
+`1.4.1` 之后改为：
+```js
+const returnValue = action.payload({ ... }).then(result => {
+    changeLoading(false);
+    return result;
+  })
+
+changeLoading(true);
+
+return returnValue;
+```
 
 # Update log
 
