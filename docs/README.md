@@ -40,6 +40,7 @@ model Attributes
     * state - 是当前 namespace 的 model 数据
     * getState - 可以动态获得 rootState
     * loading - 是全局的 loading model
+    * eventBus - 参考 `wepyx.eventBus`
 
 * `setups:Object|Function` - 启动器，所有函数在 launch 之后会调用
 
