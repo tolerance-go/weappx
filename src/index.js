@@ -35,7 +35,7 @@ const produceWrapp = cb => {
 const wepyx = {
   eventBus,
   dispatcher: {},
-  
+
   _setups: {},
   _actions: {},
   _models: {},

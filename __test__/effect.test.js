@@ -42,15 +42,17 @@ test('onError work', done => {
   wepyx.dispatcher.n.add();
 });
 
-test('loading state', done => {
+test('effects params type', done => {
   wepyx.model({
     namespace: 'n',
     state: {},
     actions: {
       add() {
         return async ({ dispatcher, state, getState, loading }) => {
-          if (loading['n/add']) return;
-          await await delay(1000);
+          expect(loading).toBeInstanceOf(Object);
+          expect(dispatcher).toBeInstanceOf(Object);
+          expect(state).toBeInstanceOf(Object);
+          expect(getState).toBeInstanceOf(Function);
           done();
         };
       },

@@ -46,6 +46,7 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
+    "eslint-plugin-promise": "^3.7.0",
     "immer": "^1.2.1",
     "redux": "^3.7.2",
     "redux-actions": "^2.3.0",
