@@ -84,7 +84,7 @@ Attributes
 
   Arguments
 
-  * type - 监听事件类型
+  * type - 监听事件类型，[支持正则字符串](https://github.com/tolerance-go/wepyx/blob/a6b08584c1d2d369f6f7364730d5daa9f00465af/__test__/eventbus.test.js#L39)
   * cb - 监听事件发生时的回调函数
   * scope - cb 调用时的执行对象
   * 调用 `unlisten`，解除监听
@@ -110,7 +110,7 @@ Attributes
 
 基于 [`wepy-redux`](https://github.com/Tencent/wepy/tree/2.0.x/packages/wepy-redux#wepy-%E5%92%8C-redux-%E7%BB%93%E5%90%88%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%99%A8)，另外融入了 dispatcher，可以在 connect 过后的组件内部，使用 [`this.dispatcher`](https://github.com/tolerance-go/wepyx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/examples/src/components/counter.wpy#L80)；并且去除了第二个参数。
 
-### `loading model`
+# `loading model`
 
 默认会注册一个 `namespace` 为 `loading` 的全局 model，当派发异步 action 的时候，对应的 `loading[namespace]` 和 `loading[${namespace}/${actionName}]` 还有 `loading.global` 将设置设置成 `true`。
 
