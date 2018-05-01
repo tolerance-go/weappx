@@ -10,6 +10,8 @@ wepyx is a lightweight front-end framework based on redux, redux-actions.(Inspir
 
 specialized for [wepy](https://github.com/Tencent/wepy) development.
 
+如果你正在使用 [wepyx-redux](https://github.com/Tencent/wepy/tree/2.0.x/packages/wepy-redux)，那么你一定不能错过 wepyx ！
+
 # Install
 ```zsh
 npm install wepyx
