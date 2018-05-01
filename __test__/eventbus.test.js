@@ -35,3 +35,12 @@ test('take', () => {
   eventBus.emit('e', 1);
   eventBus.emit('e', 1);
 });
+
+test('listen support RegExp', () => {
+  expect.assertions(2);
+  eventBus.listen('n/.*:after', () => {
+    expect(1).toEqual(1);
+  });
+  eventBus.emit('n/add:after');
+  eventBus.emit('n/sub:after');
+});

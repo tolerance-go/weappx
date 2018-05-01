@@ -23,11 +23,18 @@ const eventBus = {
     return unListen;
   },
   emit(type, payload) {
-    const listeners = this._listeners[type];
+    const listeners = this._match(type);
     if (typeof listeners === 'undefined') return;
     listeners.forEach(listen => {
       listen.cb.call(listen.scope, payload);
     });
+  },
+  _match(type) {
+    for (let key in this._listeners) {
+      if (new RegExp(key).test(type)) {
+        return this._listeners[key];
+      }
+    }
   },
 };
 
