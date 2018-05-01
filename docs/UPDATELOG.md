@@ -1,5 +1,9 @@
 # Update log
 
+### 1.5.0 (2018-05-01)
+
+* [feat - eventBus 监听 type 支持正则匹配](https://github.com/tolerance-go/wepyx/commit/ce42896f51acdc45e233389b59aab1c74740c5cd)
+
 ### 1.4.2 (2018-04-23)
 
 * [perf - cache once invoke](https://github.com/tolerance-go/wepyx/commit/0ab25e55592c53310edc96e2698cfc7e115fb84b)
