@@ -1,0 +1,15 @@
+{
+	"description": "wepyx demo - count",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "touristappid",
+	"projectname": "count",
+	"miniprogramRoot": "./dist",
+	"condition": {}
+}

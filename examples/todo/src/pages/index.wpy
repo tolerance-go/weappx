@@ -1,0 +1,168 @@
+<style lang="less">
+.container {
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  .cell {
+    display: flex;
+    justify-content: space-between;
+    .content {
+      &.done {
+        text-decoration: line-through;
+      }
+    }
+  }
+}
+</style>
+<template>
+  <view class="container">
+    <repeat for='{{todos}}' item='item' index='index'>
+      <view class="cell">
+        <input auto-focus value='{{item.text}}' wx:if='{{item.edit}}' @input='cellInputChange({{index}})'/>
+        <view wx:else class="content {{item.done ? 'done' : ''}}">{{item.text}}</view>
+        <button class="remove" @tap="removeTodo({{index}})">remove</button>
+        <button class="done"  @tap="completeTodo({{index}})">done</button>
+        <button wx:if='{{!item.edit}}' class="done"  @tap="editTodo({{index}})">edit</button>
+        <button wx:else class="done"  @tap="editTodoDone({{index}})">edit done</button>
+      </view>
+    </repeat>
+    <view>
+      我准备：
+      <input placeholder="请输入步数" value='{{inputValue}}' @input='inputChange'/>
+      <button @tap="addTodo">增加一项</button>
+      <button @tap="doneAll">全部{{toDone ? '完成' : '未完成'}}</button>
+      <button @tap="clearDone">清空已完成</button>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import wepyx, { connect } from 'wepyx';
+
+const localField = 'STORAGE_KEY';
+
+wepyx.model({
+  namespace: 'todo',
+
+  state: {
+    todos: wx.getStorageSync(localField) || []
+  },
+
+  mutations: {
+    addTodo(state, text) {
+      state.todos.push({
+        text,
+        done: false,
+        edit: false
+      });
+    },
+
+    deleteTodo(state, index) {
+      state.todos.splice(index, 1);
+    },
+
+    toggleTodo(state, index) {
+      state.todos.forEach((item, idx) => {
+        if (index === idx) {
+          item.done = !item.done;
+        }
+        return item;
+      });
+    },
+
+    editTodo(state, { text, index }) {
+      state.todos.forEach((item, idx) => {
+        if (index === idx) {
+          item.text = text;
+        }
+        return item;
+      });
+    },
+
+    toggleEditTodo(state, index) {
+       state.todos.forEach((item, idx) => {
+        if (index === idx) {
+          item.edit = !item.edit;
+        }
+        return item;
+      });
+    },
+
+    toggleAll(state, done) {
+      state.todos.forEach(todo => {
+        todo.done = done;
+      });
+    },
+
+    clearCompleted(state) {
+      state.todos = state.todos.filter(todo => !todo.done);
+    }
+  },
+
+  actions: {
+    saveLocal() {
+      return async ({ state }) => {
+        wx.setStorageSync(localField, state.todos);
+      };
+    }
+  },
+
+  setups({ eventBus, dispatcher }) {
+    eventBus.listen('todo/.*:after', () => {
+      dispatcher.saveLocal();
+    });
+  }
+});
+
+wepyx.start();
+
+@connect({
+  todos: state => state.todo.todos
+})
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: 'test'
+  };
+
+  data = {
+    inputValue: '准备吃月亮',
+    toDone: true,
+    textCaches: {}
+  };
+
+  methods = {
+    cellInputChange(index, { detail: { value } }) {
+      this.textCaches[index] = value
+    },
+    inputChange({ detail: { value } }) {
+      this.inputValue = value;
+    },
+    removeTodo(index) {
+      this.dispatcher.todo.deleteTodo(index);
+    },
+    completeTodo(index) {
+      this.dispatcher.todo.toggleTodo(index);
+    },
+    editTodo(index) {
+      this.textCaches[index] = this.todos[index].text
+      this.dispatcher.todo.toggleEditTodo(index)
+    },
+    editTodoDone(index) {
+      this.dispatcher.todo.editTodo({index, text:this.textCaches[index]})
+      this.dispatcher.todo.toggleEditTodo(index)
+    },
+    addTodo() {
+      this.dispatcher.todo.addTodo(this.inputValue);
+    },
+    doneAll() {
+      this.dispatcher.todo.toggleAll(this.toDone)
+      this.toDone = !this.toDone
+    },
+    clearDone() {
+      this.dispatcher.todo.clearCompleted()
+    }
+  };
+}
+</script>

@@ -1,0 +1,83 @@
+<style lang="less">
+.container {
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  view {
+    height: 100rpx;
+  }
+  button {
+    width: 40%;
+    display: inline-block;
+  }
+  input {
+    overflow: initial;
+    display: inline-block;
+    border-bottom: 1px solid #000;
+  }
+}
+</style>
+<template>
+  <view class="container">
+    <view class="stage">计数器数值：{{count}}</view>
+    <view>
+      步数值：
+      <input placeholder="请输入步数" auto-focus value='{{inputValue}}' @input='inputChange'/>
+    </view>
+    <view>
+      <button @tap='plus'>+</button>
+      <button style='margin-left: 20rpx;' @tap='sub'>-</button>
+    </view>
+
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import wepyx, { connect } from 'wepyx';
+
+wepyx.model({
+  namespace: 'count',
+
+  state: {
+    count: 0
+  },
+
+  mutations: {
+    plus(state, num) {
+      state.count += num;
+    },
+    sub(state, num) {
+      state.count -= num;
+    }
+  }
+});
+
+wepyx.start();
+
+@connect({
+  count: state => state.count.count
+})
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: 'test'
+  };
+
+  data = {
+    inputValue: 1
+  };
+
+  methods = {
+    inputChange({detail: { value }}) {
+      this.inputValue = Number(value)
+    },
+    plus() {
+      this.dispatcher.count.plus(this.inputValue);
+    },
+    sub() {
+      this.dispatcher.count.sub(this.inputValue);
+    }
+  };
+}
+</script>
