@@ -4,6 +4,5 @@
   "description": "weapp to maanshan connector.",
   "main": "lib/index.js",
   "author": "bzone <yarnbCoder@gmail.com>",
-  "license": "MIT",
-  "dependencies": {}
+  "license": "MIT"
 }

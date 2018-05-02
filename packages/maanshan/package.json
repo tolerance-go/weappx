@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "maanshan is a light framework to control data base on redux, redux-actions, immer.",
   "main": "lib/index.js",
-  "keywords": ["weapp", "redux"],
+  "keywords": [
+    "weapp",
+    "redux"
+  ],
   "author": "bzone <yarnbCoder@gmail.com>",
   "license": "MIT",
   "dependencies": {
