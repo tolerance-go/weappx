@@ -1,7 +1,7 @@
 # Maanshan
 [![NPM version](https://img.shields.io/npm/v/maanshan.svg?style=flat)](https://npmjs.org/package/maanshan)
 [![Build Status](https://travis-ci.org/tolerance-go/maanshan.svg?branch=master)](https://travis-ci.org/tolerance-go/maanshan)
-[![Coverage Status](https://coveralls.io/repos/github/tolerance-go/maanshan/badge.svg?branch=master)](https://coveralls.io/github/tolerance-go/maanshan?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/tolerance-go/wepyx/badge.svg?branch=master)](https://coveralls.io/github/tolerance-go/wepyx?branch=master)
 [![NPM downloads](http://img.shields.io/npm/dm/maanshan.svg?style=flat)](https://npmjs.org/package/maanshan)
 [![Dependencies Status](https://david-dm.org/tolerance-go/maanshan/status.svg)](https://david-dm.org/tolerance-go/maanshan)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
