@@ -4,7 +4,7 @@ import maanshan from 'maanshan'
 
 ### `store = maanshan.init(options:Object)`
 
-初始化配置，可省略
+初始化配置
 
 options Attributes
 
