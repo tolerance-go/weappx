@@ -1,0 +1,9 @@
+{
+  "name": "weapp-maanshan",
+  "version": "0.1.0",
+  "description": "weapp to maanshan connector.",
+  "main": "lib/index.js",
+  "author": "bzone <yarnbCoder@gmail.com>",
+  "license": "MIT",
+  "dependencies": {}
+}

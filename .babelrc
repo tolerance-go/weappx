@@ -1,12 +1,4 @@
 {
-  "presets": [
-    [
-      "env",
-      {
-        "useBuiltIns": "usage"
-      }
-    ],
-    "react"
-  ],
-  "plugins": ["add-module-exports"]
+  "presets": ["env"],
+  "plugins": ["add-module-exports", "transform-object-rest-spread"]
 }

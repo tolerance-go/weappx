@@ -1,23 +1,11 @@
 language: node_js
+
 node_js:
-- '8'
-install:
-- npm install
-script:
-- npm test
-- npm run build
+  - "8"
+
+before_script:
+  - npm run build
+  - npm run bootstrap
+
 after_success:
-- npm run coveralls
-branches:
-  only:
-  - master
-deploy:
-  provider: npm
-  email: yarnbCoder@gmail.com
-  skip_cleanup: true
-  api_key:
-    secure: PTu2HJX1+6PNo5banpo6o/jq8kMi+JmAsRtziPjQFvAWUxjjBgq/d2bZFgCwsYv9QinWy7hXhhNCnm6nKlENi8ZnNsov3ivBe+aRSVaZWomvd2a3aDAvc01N46QCTpvtKt9BbEQlQL50UBAoaAd/ktZFPGkxLusD2Vht3LTFCz+ist4TFQuvOi/4A8OV5YdQOU7fqxoOaVNqXo+ApQTq33rMPoQVjrNC1B/VGqAIyE9CmzLUCxFFqWhPC+46OVzrR9a7EM5rEfWwmFVjzRz9eXu0UbQeIOEtjt6imJkPpxa5DpaDMpGv/GHSZbo0UjViYKK6ipfZA2WwmhSVF9Vfp1xzrkT2ezirF9CEhVBNAJUgy6krKu8mdLvV6jGzyx2kja0fB+J0PqN2qI6sOgALLO9GHRsf+9xeeUaHnNn6vW02hFTTy/SlJwgqxWP4YQeT+WNgmLpGHbguXXuhsQOSpuGHr8y84LPnaXtQQZLgp8NPb3ulfE1eHPymGJn2Bw/8lEqXuIjdUfIKB+sUyHXLNsVrU8GElWYUsPRRBi7EGKh9828rgJd6mFnAXNsVVVGviag2sIe9bGVOY+Ioiy1UBJN6qnru0mZDYLHch34xXfzvmB6UxrlmboMKKdAJStekSCbZSc2DGM9B1dpEfAAz1LibXLV6/OxEk2274dzMlQ4=
-  on:
-    repo: tolerance-go/wepyx
-    branch: master
-    
+  - npm run coveralls

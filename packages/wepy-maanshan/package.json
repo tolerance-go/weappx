@@ -1,0 +1,11 @@
+{
+  "name": "wepy-maanshan",
+  "version": "0.1.0",
+  "description": "wepy to maanshan connector.",
+  "main": "lib/index.js",
+  "author": "bzone <yarnbCoder@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "wepy-redux": "^1.5.7"
+  }
+}
