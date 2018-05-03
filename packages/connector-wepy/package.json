@@ -1,7 +1,7 @@
 {
-  "name": "wepy-maanshan",
+  "name": "wepy-weappx",
   "version": "0.1.0",
-  "description": "wepy to maanshan connector.",
+  "description": "wepy to weappx connector.",
   "main": "lib/index.js",
   "author": "bzone <yarnbCoder@gmail.com>",
   "license": "MIT",

@@ -1,7 +1,7 @@
 {
-  "name": "maanshan",
+  "name": "weappx",
   "version": "0.1.0",
-  "description": "maanshan is a light framework to control data base on redux, redux-actions, immer.",
+  "description": "weappx is a light framework to control data base on redux, redux-actions, immer.",
   "main": "lib/index.js",
   "keywords": [
     "weapp",

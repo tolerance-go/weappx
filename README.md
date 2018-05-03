@@ -1,12 +1,12 @@
-# Maanshan
-[![NPM version](https://img.shields.io/npm/v/maanshan.svg?style=flat)](https://npmjs.org/package/maanshan)
-[![Build Status](https://travis-ci.org/tolerance-go/maanshan.svg?branch=master)](https://travis-ci.org/tolerance-go/maanshan)
+# weappx
+[![NPM version](https://img.shields.io/npm/v/weappx.svg?style=flat)](https://npmjs.org/package/weappx)
+[![Build Status](https://travis-ci.org/tolerance-go/weappx.svg?branch=master)](https://travis-ci.org/tolerance-go/weappx)
 [![Coverage Status](https://coveralls.io/repos/github/tolerance-go/wepyx/badge.svg?branch=master)](https://coveralls.io/github/tolerance-go/wepyx?branch=master)
-[![NPM downloads](http://img.shields.io/npm/dm/maanshan.svg?style=flat)](https://npmjs.org/package/maanshan)
-[![Dependencies Status](https://david-dm.org/tolerance-go/maanshan/status.svg)](https://david-dm.org/tolerance-go/maanshan)
+[![NPM downloads](http://img.shields.io/npm/dm/weappx.svg?style=flat)](https://npmjs.org/package/weappx)
+[![Dependencies Status](https://david-dm.org/tolerance-go/weappx/status.svg)](https://david-dm.org/tolerance-go/weappx)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-现在 原生小程序，wepy 都可以使用 maanshan 来管理应用状态了。
+现在 原生小程序，wepy 都可以使用 weappx 来管理应用状态了。
 
 mpvue 会在以后提供对应的 connector。
 
@@ -16,18 +16,18 @@ mpvue 会在以后提供对应的 connector。
 
 # Install
 ```zsh
-npm install maanshan
+npm install weappx
 ```
 
 # Usage
 ```js
-import maanshan from 'maanshan'
+import weappx from 'weappx'
 // wepy 框架的连接器
-import wepyConnector from 'wepy-maanshan'
+import wepyConnector from 'wepy-weappx'
 // 原生小程序 框架的连接器
-import weappConnector from 'weapp-maanshan'
+import weappConnector from 'weapp-weappx'
 
-const store = maanshan()
+const store = weappx()
 
 store.init({
     // 根据你的开发框架来选择连接器
@@ -46,7 +46,7 @@ store.start()
 - 更简单的数据处理[copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)
 - 强大的 hook 机制
 
-# Example(以下的例子都是基于 wepy)
+# Example
 
 - [count - wepy](https://github.com/tolerance-go/wepyx/tree/master/examples/count)
 - [todo - wepy](https://github.com/tolerance-go/wepyx/tree/master/examples/todo)
@@ -60,11 +60,6 @@ store.start()
 # Community(中文)
 
 <img src='./assets/WechatIMG1585.jpeg' width='200'>
-
-# FAQ
-
-### 为什么叫 maanshan ？
-这是一个地名：马鞍山
 
 
 # License

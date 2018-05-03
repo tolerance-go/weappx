@@ -9,24 +9,24 @@
 因此，新项目相对老项目主要干了2件事情
 
 - 将数据管理部分和组件框架分离
-- 改了个名字
+- 改了个名字（还是和微信有关系）
 
 升级方案
 
-1. 引入 wepyx 改成 maanshan
+1. 引入 wepyx 改成 weappx
 ```js
 - import wepyx from 'wepyx'
-+ import maanshan from 'maanshan'
++ import weappx from 'weappx'
 ```
 
 2. 需要配合引入连接器，根据组件框架不同；目前实现的版本有 wepy 和 原生小程序
 ```js
-+ import wepyConnector from 'wepy-maanshan'
++ import wepyConnector from 'wepy-weappx'
 // or
-+ import weappConnector from 'weapp-maanshan'
++ import weappConnector from 'weapp-weappx'
 
 // 和 wepyx 的单例相比，现在可以创建多个实例了，也是较大的区别之一
-const store = maanshan()
+const store = weappx()
 
 // init 现在必须得调用了，并且 connector 是必传的参数
 store.init({
