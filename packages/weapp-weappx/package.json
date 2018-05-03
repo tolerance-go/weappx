@@ -1,6 +1,6 @@
 {
   "name": "weapp-weappx",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "weapp to weappx connector.",
   "main": "lib/index.js",
   "author": "bzone <yarnbCoder@gmail.com>",
