@@ -1,6 +1,6 @@
 {
   "name": "weappx",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "weappx is a light framework to control data base on redux, redux-actions, immer.",
   "main": "lib/index.js",
   "keywords": [
