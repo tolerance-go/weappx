@@ -29,13 +29,7 @@ if (buildCode === 1) {
 
 const cp = fork(
   join(process.cwd(), 'node_modules/.bin/lerna'),
-  [
-    'publish',
-    '--skip-npm',
-    '--conventional-commits',
-    '--changelog-preset',
-    'angular-bitbucket',
-  ].concat(process.argv.slice(2)),
+  ['publish', '--skip-npm', '--conventional-commits'].concat(process.argv.slice(2)),
   {
     stdio: 'inherit',
     cwd: process.cwd(),
