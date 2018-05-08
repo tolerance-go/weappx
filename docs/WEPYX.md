@@ -21,9 +21,9 @@
 
 2. 需要配合引入连接器，根据组件框架不同；目前实现的版本有 wepy 和 原生小程序
 ```js
-+ import wepyConnector from 'wepy-weappx'
++ import wepyConnector from 'weappx-wepy'
 // or
-+ import weappConnector from 'weapp-weappx'
++ import weappConnector from 'weappx-weapp'
 
 // 和 wepyx 的单例相比，现在可以创建多个实例了，也是较大的区别之一
 const store = weappx()

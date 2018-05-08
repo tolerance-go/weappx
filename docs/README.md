@@ -109,13 +109,13 @@ Attributes
 
 # Connector
 
-连接器是负责将 数据管理 和 组件框架进行数据绑定的重要部分。目前根据 原生小程序 和 wepy 2个组件框架，分别对应了 weapp-weappx 和 wepy-weappx 2个连接器；使用方法通过 store.init 传入。
+连接器是负责将 数据管理 和 组件框架进行数据绑定的重要部分。目前根据 原生小程序 和 wepy 2个组件框架，分别对应了 weappx-weapp 和 weappx-wepy 2个连接器；使用方法通过 store.init 传入。
 
-### wepy-weappx
+### weappx-wepy
 
 基于 [`wepy-redux`](https://github.com/Tencent/wepy/tree/2.0.x/packages/wepy-redux#wepy-%E5%92%8C-redux-%E7%BB%93%E5%90%88%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%99%A8)，mapstate 中另外融入了 dispatcher，可以在 connect 过后的组件内部，使用 [`this.dispatcher`](https://github.com/tolerance-go/weappx/blob/fa32121d88142b80d003ca2875b53dabb8d26622/examples/src/components/counter.wpy#L80)；并且去除了第二个参数。
 
-### weapp-weappx
+### weappx-weapp
 
 有2个connect方法：`connectPage`, `connectComponent`；可以在 connect 过后的组件内部 data 中使用 dispatcher
 

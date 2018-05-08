@@ -23,9 +23,9 @@ npm install weappx
 ```js
 import weappx from 'weappx'
 // wepy 框架的连接器
-import wepyConnector from 'wepy-weappx'
+import wepyConnector from 'weappx-wepy'
 // 原生小程序 框架的连接器
-import weappConnector from 'weapp-weappx'
+import weappConnector from 'weappx-weapp'
 
 const store = weappx()
 

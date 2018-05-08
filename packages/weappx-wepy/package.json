@@ -1,7 +1,7 @@
 {
-  "name": "wepy-weappx",
-  "version": "0.1.2",
-  "description": "wepy to weappx connector.",
+  "name": "weappx-wepy",
+  "version": "0.0.0",
+  "description": "weappx to wepy connector.",
   "main": "lib/index.js",
   "author": "bzone <yarnbCoder@gmail.com>",
   "license": "MIT"
