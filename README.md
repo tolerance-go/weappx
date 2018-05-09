@@ -59,7 +59,7 @@ store.start()
 
 # Community(中文)
 
-<img src='./assets/WechatIMG1585.jpeg' width='200'>
+<img src='./assets/WechatIMG107.jpeg' width='200'>
 
 
 # License
