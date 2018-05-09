@@ -4,8 +4,13 @@ const through = require('through2');
 const chalk = require('chalk');
 const rimraf = require('rimraf');
 const { readdirSync, readFileSync, writeFileSync, existsSync } = require('fs');
-const { join } = require('path');
+const { join, parse } = require('path');
 const chokidar = require('chokidar');
+const webpack = require('webpack');
+const wbMerge = require('webpack-merge');
+const UglifyJS = require('uglify-js');
+
+const webpackConfig = require('../webpack.config.js');
 
 const lib = process.env.ES ? 'es' : 'lib';
 
@@ -38,6 +43,38 @@ function buildPkg(pkg) {
     .pipe(vfs.dest(`./packages/${pkg}/${lib}/`));
 }
 
+function bundlePkg(pkg) {
+  const distDir = join(cwd, `./packages/${pkg}/dist`);
+  const filename = pkg + '.js';
+
+  webpack(
+    wbMerge(
+      {
+        entry: `./packages/${pkg}/src/index.js`,
+        output: {
+          path: distDir,
+          library: pkg,
+          filename,
+        },
+      },
+      webpackConfig
+    ),
+    (err, stats) => {
+      if (err || stats.hasErrors()) {
+        throw new Error('bunld error', err);
+      }
+      console.log('bundle', pkg, 'success!');
+      const result = UglifyJS.minify(readFileSync(join(distDir, filename), 'utf-8'));
+
+      if (result.error) {
+        throw new Error('uglify error', result.error);
+      }
+      writeFileSync(join(distDir, pkg + '.min.js'), result.code, 'utf-8');
+      console.log('uglify', pkg, 'success!');
+    }
+  );
+}
+
 function build() {
   const dirs = readdirSync(join(cwd, 'packages'));
   const arg = process.argv[2];
@@ -45,6 +82,7 @@ function build() {
   dirs.forEach(pkg => {
     if (pkg.charAt(0) === '.') return;
     buildPkg(pkg);
+    bundlePkg(pkg);
     if (isWatch) {
       const watcher = chokidar.watch(join(cwd, 'packages', pkg, 'src'), {
         ignoreInitial: true,
