@@ -9,7 +9,7 @@
 	},
 	"compileType": "miniprogram",
 	"appid": "touristappid",
-	"projectname": "count",
+	"projectname": "weappx-example-count",
 	"miniprogramRoot": "./dist",
 	"condition": {}
 }

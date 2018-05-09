@@ -9,7 +9,7 @@
 	},
 	"compileType": "miniprogram",
 	"appid": "touristappid",
-	"projectname": "todo",
+	"projectname": "weappx-example-todo",
 	"miniprogramRoot": "./dist",
 	"condition": {}
 }

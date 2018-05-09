@@ -39,11 +39,16 @@
 
 <script>
 import wepy from 'wepy';
-import wepyx, { connect } from 'wepyx';
+import weappx from 'weappx';
+import connector from 'weappx-wepy';
+
+const store = weappx()
+
+store.init({ connector })
 
 const localField = 'STORAGE_KEY';
 
-wepyx.model({
+store.model({
   namespace: 'todo',
 
   state: {
@@ -116,9 +121,9 @@ wepyx.model({
   }
 });
 
-wepyx.start();
+store.start();
 
-@connect({
+@connector.connect({
   todos: state => state.todo.todos
 })
 export default class Index extends wepy.page {
