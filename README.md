@@ -48,6 +48,7 @@ store.start()
 
 # Example
 
+- [count - weapp](https://github.com/tolerance-go/wepyx/tree/master/examples/count-weapp)
 - [count - wepy](https://github.com/tolerance-go/wepyx/tree/master/examples/count)
 - [todo - wepy](https://github.com/tolerance-go/wepyx/tree/master/examples/todo)
 
