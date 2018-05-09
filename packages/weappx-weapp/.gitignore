@@ -6,7 +6,6 @@
 
 # production
 /_book
-dist
 lib
 
 # misc
