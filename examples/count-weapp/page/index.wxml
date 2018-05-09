@@ -1,0 +1,11 @@
+ <view class="container">
+  <view class="stage">计数器数值：{{count}}</view>
+  <view>
+    步数值：
+    <input placeholder="请输入步数" auto-focus value='{{inputValue}}' bindinput='inputChange'/>
+  </view>
+  <view>
+    <button bind:tap='plus'>+</button>
+    <button style='margin-left: 20rpx;' bind:tap='sub'>-</button>
+  </view>
+</view>
