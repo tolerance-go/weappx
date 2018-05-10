@@ -61,7 +61,7 @@ store.start()
 # Links
 
 - [Documentation](https://github.com/tolerance-go/wepyx/tree/master/docs/README.md)
-- [Update Log](https://github.com/tolerance-go/wepyx/tree/master/docs/UPDATELOG.md)
+- [Update Log](https://github.com/tolerance-go/weappx/blob/master/packages/weappx/CHANGELOG.md)
 - [Contribution](https://github.com/tolerance-go/blog/issues/1#issue-313932480)
 
 # Community(中文)
