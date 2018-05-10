@@ -148,8 +148,36 @@ Page(
 
 # loading model
 
-默认会注册一个 `namespace` 为 `loading` 的全局 model，当派发异步 action 的时候，对应的 `loading[namespace]` 和 `loading[${namespace}/${actionName}]` 还有 `loading.global` 将设置设置成 `true`。
+全局默认会注册一个 `namespace` 为 `loading` 的 model，结构如下：
 
-结束的时候会设置为 `false`；如果 `namespace` 下属只要有一个异步 action 还没有完成，它的状态就始终是 `loading` 状态。
+```js
+{
+  namespace: 'loading',
 
-如果有一个 `namespace` 没有结束，那么 `global` 就始终是 `loading` 状态。
+  state: {
+    '@namespaceLoadingCounts': {},
+  },
+
+  mutations: {
+    save(...) { ... }
+  }
+}
+```
+
+当派发异步 action 的时候，对应的 `loading[namespace]` 和 `loading[${namespace}/${actionName}]` 以及 `loading.global` 将设置设置成 `true`
+
+```js
+dispatcher.modelA.fetchData()
+
+// =>
+
+expect(loading.modelA && loading['modelA/fetchData'] && loading.global).toBeTruthy()
+```
+
+当异步 action 结束的时候，之前的状态又会重新设置为 `false`
+
+状态变化规则：
+
+- 如果一个异步 action 没有结束，则它始终是 `loading` 状态
+- 如果 `model` 下属只要有一个异步 action 还没有结束，则它始终是 `loading` 状态
+- 如果有一个 `model` 没有结束，那么 `global` 就始终是 `loading` 状态
