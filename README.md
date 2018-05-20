@@ -64,10 +64,9 @@ store.start()
 - [Update Log](https://github.com/tolerance-go/weappx/blob/master/packages/weappx/CHANGELOG.md)
 - [Contribution](https://github.com/tolerance-go/blog/issues/1#issue-313932480)
 
-# Community(中文)
-
-<img src='./assets/WechatIMG107.jpeg' width='200'>
-
-
 # License
 [MIT](https://tldrlegal.com/license/mit-license)
+
+<div align=center>
+<image src='./assets/star.jpeg' width="550">
+</div>
