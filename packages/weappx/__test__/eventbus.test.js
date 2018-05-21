@@ -36,6 +36,19 @@ test('take', () => {
   eventBus.emit('e', 1);
 });
 
+test('takeLast', done => {
+  eventBus.emit('e', 1);
+  eventBus.takeLast('e').then(data => {
+    expect(data).toEqual(1);
+    done();
+  });
+});
+
+test('isHappened', () => {
+  eventBus.emit('e', 1);
+  expect(eventBus.isHappened('e')).toBeTruthy();
+});
+
 test('listen support RegExp', () => {
   expect.assertions(2);
   eventBus.listen('n/.*:after', () => {

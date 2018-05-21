@@ -99,13 +99,39 @@ Attributes
   * type - 触发事件类型
   * payload - 触发回调的参数
 
-* `take(type:String) => chained:Promise`
+* `once(type:String, cb:Function, scope:Object) => void`
 
-  监听一次事件，事件发生之后监听会被自动移除；返回一个 Promise 对象；resolve(action.payload)
+  监听一次事件，事件发生之后监听会被自动移除
 
   Arguments
 
   * type - 监听事件类型
+  * cb - 监听事件发生时的回调函数
+  * scope - cb 调用时的执行对象
+
+* `take(type:String) => chained:Promise`
+
+  同 once，但是返回一个 Promise 对象；resolve(action.payload)
+
+  Arguments
+
+  * type - 监听事件类型
+
+* `takeLast(type:String) => chained:Promise`
+
+  同 take，但是 takeLast 如果发现监听的事件，已经发生过，就会立即 `resolved`
+
+  Arguments
+
+  * type - 监听事件类型
+
+* `isHappened(type:String) => Boolean`
+
+  判断事件是否发生过
+
+  Arguments
+
+  * type - 事件类型
 
 # Connector
 

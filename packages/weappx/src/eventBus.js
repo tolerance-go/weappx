@@ -1,11 +1,28 @@
 const eventBus = {
   _listeners: {},
+  _eventCache: {},
+  isHappened(type) {
+    return !!this._eventCache[type];
+  },
+  takeLast(type) {
+    if (this._eventCache.hasOwnProperty(type)) {
+      return Promise.resolve(this._eventCache[type]);
+    }
+    return this.take(type);
+  },
   take(type) {
-    return new Promise(resolve => {
-      const un = this.listen(type, payload => {
-        resolve(payload);
-        un();
-      });
+    return new Promise((resolve, reject) => {
+      try {
+        this.once(type, resolve);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  },
+  once(type, cb, scope) {
+    const un = this.listen(type, payload => {
+      cb.call(scope, payload);
+      un();
     });
   },
   listen(type, cb, scope) {
@@ -23,6 +40,7 @@ const eventBus = {
     return unListen;
   },
   emit(type, payload) {
+    this._eventCache[type] = payload;
     const listeners = this._match(type);
     if (typeof listeners === 'undefined') return;
     listeners.forEach(listen => {
