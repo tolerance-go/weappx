@@ -14,10 +14,7 @@
     "lint": "eslint --ext .js --ext .less src __test__"
   },
   "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/examples/"
-    ]
+    "testPathIgnorePatterns": ["/node_modules/", "/examples/", "/weappx-weapp/", "/weappx-wepy/"]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
