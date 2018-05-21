@@ -2,6 +2,13 @@
 import weappx from '../src/index';
 import { delay, connector } from './helper';
 
+test('noLoadingModel', () => {
+  const app = weappx();
+  app.init({ connector, noLoadingModel: true });
+  app.start();
+  expect(app._models.loading).toBeFalsy();
+});
+
 test('model loading namespace confilct', () => {
   expect(() => {
     const app = weappx();

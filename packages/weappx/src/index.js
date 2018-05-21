@@ -48,6 +48,7 @@ function create() {
     },
   };
 
+  let userOptions;
   let _connector;
   let _extraMiddlewares = [thunkMiddleware, actionTakeMiddleware];
   let _extraEnhancers = []; // eslint-disable-line
@@ -59,7 +60,7 @@ function create() {
   return app;
 
   function init(options) {
-    const { extraMiddlewares, onError, connector } = options;
+    const { extraMiddlewares, onError, connector } = (userOptions = options);
 
     assert(connector, '[weappx.init]:connector is required');
 
@@ -148,40 +149,42 @@ function create() {
   function start() {
     assert(_connector, '[weappx.start]:connector is required, please call [weappx.init] first');
 
-    // effect for model just for test so put model to here
-    const loadingModel = {
-      namespace: 'loading',
+    if (!userOptions.noLoadingModel) {
+      // effect for model just for test so put model to here
+      const loadingModel = {
+        namespace: 'loading',
 
-      state: {
-        '@namespaceLoadingCounts': {},
-      },
-
-      mutations: {
-        save(state, { actionType, loading }) {
-          state[actionType] = loading;
-
-          const [namespace, actionCreatorName] = actionType.split(SPLIT); // eslint-disable-line
-          const loadingCounts = state['@namespaceLoadingCounts'];
-
-          if (!loadingCounts[namespace]) {
-            loadingCounts[namespace] = 0;
-          }
-
-          if (loading) {
-            loadingCounts[namespace]++;
-          } else {
-            loadingCounts[namespace]--;
-          }
-
-          state[namespace] = !!loadingCounts[namespace];
-
-          state.global = some(loadingCounts);
+        state: {
+          '@namespaceLoadingCounts': {},
         },
-      },
-    };
 
-    // default upload loadingModel
-    _model(loadingModel);
+        mutations: {
+          save(state, { actionType, loading }) {
+            state[actionType] = loading;
+
+            const [namespace, actionCreatorName] = actionType.split(SPLIT); // eslint-disable-line
+            const loadingCounts = state['@namespaceLoadingCounts'];
+
+            if (!loadingCounts[namespace]) {
+              loadingCounts[namespace] = 0;
+            }
+
+            if (loading) {
+              loadingCounts[namespace]++;
+            } else {
+              loadingCounts[namespace]--;
+            }
+
+            state[namespace] = !!loadingCounts[namespace];
+
+            state.global = some(loadingCounts);
+          },
+        },
+      };
+
+      // default upload loadingModel
+      _model(loadingModel);
+    }
 
     const rootReducer = combineReducers(this._reducers);
 

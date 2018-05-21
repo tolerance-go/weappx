@@ -11,6 +11,7 @@ options Attributes
 * connector(Object: { setStore, connectify }): 连接器，必传参数
 * extraMiddlewares(Array): 额外的中间件
 * onError(Function): 异步 action 内抛出的错误可以在这里统一处理
+* noLoadingModel(Boolean=false): 是否不注册 [loading model](https://github.com/tolerance-go/weappx/blob/master/docs/README.md#loading-model)
 
 ### `store.model(model:Object)`
 
