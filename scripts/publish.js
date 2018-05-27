@@ -42,9 +42,9 @@ cp.on('close', code => {
   console.log('code', code);
   if (code === 1) {
     console.error('Failed: lerna publish');
-    publishToNpm();
     process.exit(1);
   }
+  publishToNpm();
 });
 
 function publishToNpm() {
