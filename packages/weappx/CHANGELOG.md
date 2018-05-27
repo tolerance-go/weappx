@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/tolerance-go/wepyx/compare/weappx@0.2.0...weappx@1.0.0) (2018-05-27)
+
+
+### Features
+
+* **weappx:** independent loading by plugin; add opts ([5737c3a](https://github.com/tolerance-go/wepyx/commit/5737c3a))
+
+
+### BREAKING CHANGES
+
+* **weappx:** remove loading param
+* **weappx:** remove noLoadingModel opts
+* **weappx:** remove extraMiddlewares opts
+
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/tolerance-go/wepyx/compare/weappx@0.1.0...weappx@0.2.0) (2018-05-21)
 
