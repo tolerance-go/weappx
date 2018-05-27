@@ -1,37 +1,12 @@
 /* global test, expect, afterEach */
 import weappx from '../src/index';
+import createLoading from '../../weappx-plugin-loading/src/index';
 import { delay, connector } from './helper';
-
-test('noLoadingModel', () => {
-  const app = weappx();
-  app.init({ connector, noLoadingModel: true });
-  app.start();
-  expect(app._models.loading).toBeFalsy();
-});
-
-test('model loading namespace confilct', () => {
-  expect(() => {
-    const app = weappx();
-    app.init({ connector });
-    app.model({
-      namespace: 'global',
-    });
-    app.start();
-  }).toThrowError(/model namespace:\w+ is reserved; please use other namespace/);
-
-  expect(() => {
-    const app = weappx();
-    app.init({ connector });
-    app.model({
-      namespace: 'loading',
-    });
-    app.start();
-  }).toThrowError(/model namespace:\w+ is reserved; please use other namespace/);
-});
 
 test('model loading', done => {
   const app = weappx();
   app.init({ connector });
+  app.use(createLoading());
   app.model({
     namespace: 'n',
     mutations: {

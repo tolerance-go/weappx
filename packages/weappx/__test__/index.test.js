@@ -127,16 +127,6 @@ test('action meta', () => {
   return app.dispatcher.n.asyncAdd();
 });
 
-test('init', () => {
-  expect(() => {
-    const app = weappx();
-    app.init({
-      connector,
-      extraMiddlewares: {},
-    });
-  }).toThrowError(/extraMiddlewares type must be Array/);
-});
-
 test('setups', done => {
   const app = weappx();
   app.init({ connector });

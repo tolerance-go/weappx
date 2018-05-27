@@ -1,10 +1,10 @@
 import { handleActions, createActions } from 'redux-actions';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
-import { eventBus, actionTakeMiddleware } from './actionTakeMiddleware';
-import thunkMiddleware from './tunkMiddleware';
+import eventBus from './eventBus';
+import actionTakeMiddleware from './middlewares/actionTake';
+import thunkMiddleware from './middlewares/tunk';
 import produce from 'immer';
 import assert from './utils/assert';
-import some from './utils/some';
 
 const SPLIT = '/';
 
@@ -36,6 +36,7 @@ function create() {
     dispatcher: {},
     init,
     model,
+    use,
     models,
     start,
     _setups: {},
@@ -48,20 +49,18 @@ function create() {
     },
   };
 
-  let userOptions;
+  const _composeDispatcher = {}; // 待注入到 thunk 的 dispatcher namespace maps
+  const _takes = {}; // 待注入到 thunk 的 take namespace maps
   let _connector;
-  let _extraMiddlewares = [thunkMiddleware, actionTakeMiddleware];
+  let _extraModels = [];
+  let _suffixMiddlewares = [thunkMiddleware, actionTakeMiddleware];
+  let _prefixMiddlewares = [];
   let _extraEnhancers = []; // eslint-disable-line
-  // 待注入到 thunk 的 dispatcher namespace maps
-  const _composeDispatcher = {};
-  // 待注入到 thunk 的 take namespace maps
-  const _takes = {};
 
   return app;
 
   function init(options) {
-    const { extraMiddlewares, onError, connector } = (userOptions = options);
-
+    const { connector } = options;
     assert(connector, '[weappx.init]:connector is required');
 
     for (let k in connector) {
@@ -76,23 +75,41 @@ function create() {
         };
       }
     }
-
     _connector = connector;
+    use(options);
+  }
 
-    if (extraMiddlewares) {
-      assert(Array.isArray(extraMiddlewares), 'extraMiddlewares type must be Array');
-      _extraMiddlewares = _extraMiddlewares.concat(extraMiddlewares);
+  function use(options) {
+    assert(typeof options === 'object', '[app.use]: options type must be object');
+    const { suffixMiddlewares, prefixMiddlewares, onError, extraModels } = options;
+
+    if (suffixMiddlewares) {
+      assert(Array.isArray(suffixMiddlewares), '[app.use]: suffixMiddlewares type must be Array');
+      _suffixMiddlewares = _suffixMiddlewares.concat(suffixMiddlewares);
+    }
+
+    if (prefixMiddlewares) {
+      assert(Array.isArray(prefixMiddlewares), '[app.use]: prefixMiddlewares type must be Array');
+      _prefixMiddlewares = _prefixMiddlewares.concat(prefixMiddlewares);
     }
 
     if (onError) {
-      assert(typeof onError === 'function', 'onError type must be Function');
-      this._effectsErrorDefaultHandle = onError;
+      assert(typeof onError === 'function', '[app.use]: onError type must be Function');
+      app._effectsErrorDefaultHandle = onError;
+    }
+
+    if (extraModels) {
+      assert(Array.isArray(extraModels), `[app.use]: _extraModels type must be Array`);
+      _extraModels = _extraModels.concat(extraModels);
     }
   }
 
-  function _model(options) {
+  function model(options) {
     const { namespace, state = {}, mutations = {}, actions = {} } = options;
     let { setups = {} } = options;
+
+    assert(namespace, `model namespace must be exsit`);
+    assert(undefined === app._models[namespace], `model[namespace=${namespace}] must be union`);
 
     app._models[namespace] = namespace;
 
@@ -129,66 +146,21 @@ function create() {
     app._setups[namespace] = setups;
   }
 
-  function model(options) {
-    const { namespace } = options;
-
-    assert(
-      ['global', 'loading'].includes(namespace) === false,
-      `model namespace:${namespace} is reserved; please use other namespace`
-    );
-    assert(namespace, `model namespace must be exsit`);
-    assert(undefined === this._models[namespace], `model[namespace=${namespace}] must be union`);
-
-    _model(options);
-  }
-
   function models(models) {
-    models.forEach(model => this.model(model));
+    models.forEach(model => app.model(model));
   }
 
   function start() {
     assert(_connector, '[weappx.start]:connector is required, please call [weappx.init] first');
 
-    if (!userOptions.noLoadingModel) {
-      // effect for model just for test so put model to here
-      const loadingModel = {
-        namespace: 'loading',
+    _extraModels.forEach(m => model(m));
 
-        state: {
-          '@namespaceLoadingCounts': {},
-        },
+    const rootReducer = combineReducers(app._reducers);
 
-        mutations: {
-          save(state, { actionType, loading }) {
-            state[actionType] = loading;
-
-            const [namespace, actionCreatorName] = actionType.split(SPLIT); // eslint-disable-line
-            const loadingCounts = state['@namespaceLoadingCounts'];
-
-            if (!loadingCounts[namespace]) {
-              loadingCounts[namespace] = 0;
-            }
-
-            if (loading) {
-              loadingCounts[namespace]++;
-            } else {
-              loadingCounts[namespace]--;
-            }
-
-            state[namespace] = !!loadingCounts[namespace];
-
-            state.global = some(loadingCounts);
-          },
-        },
-      };
-
-      // default upload loadingModel
-      _model(loadingModel);
-    }
-
-    const rootReducer = combineReducers(this._reducers);
-
-    const store = createStore(rootReducer, applyMiddleware(..._extraMiddlewares));
+    const store = createStore(
+      rootReducer,
+      applyMiddleware(..._prefixMiddlewares.concat(_suffixMiddlewares))
+    );
 
     // 包装 actionCreator => dispatch
     for (let namespace in this._actions) {

@@ -1,6 +1,7 @@
 /* global test, expect, afterEach */
 import weappx from '../src/index';
 import { connector } from './helper';
+import createLoading from '../../weappx-plugin-loading/src/index';
 
 test('onError type', () => {
   expect(() => {
@@ -43,13 +44,13 @@ test('onError work', done => {
 test('effects params type', done => {
   const app = weappx();
   app.init({ connector });
+  app.use(createLoading());
   app.model({
     namespace: 'n',
     state: {},
     actions: {
       add() {
-        return async ({ dispatcher, state, getState, loading }) => {
-          expect(loading).toBeInstanceOf(Object);
+        return async ({ dispatcher, state, getState }) => {
           expect(dispatcher).toBeInstanceOf(Object);
           expect(state).toBeInstanceOf(Object);
           expect(getState).toBeInstanceOf(Function);
