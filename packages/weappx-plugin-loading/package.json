@@ -1,0 +1,7 @@
+{
+  "name": "weappx-plugin-loading",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "author": "bzone <yarnbCoder@gmail.com>",
+  "license": "MIT"
+}
