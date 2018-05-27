@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build": "node ./scripts/build.js",
+    "build:watch": "node ./scripts/build.js -w",
     "publish": "./scripts/publish.js",
     "bootstrap": "lerna bootstrap",
     "rg": "node scripts/replace.js",
@@ -14,11 +15,18 @@
     "lint": "eslint --ext .js --ext .less src __test__"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/node_modules/", "/examples/", "/weappx-weapp/", "/weappx-wepy/"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/examples/",
+      "/weappx-weapp/",
+      "/weappx-wepy/",
+      "/weappx-plugin-loading/"
+    ]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.2",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
