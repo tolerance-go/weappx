@@ -9,9 +9,11 @@ import weappx from 'weappx'
 options Attributes
 
 * connector(Object: { setStore, connectify }): 连接器，必传参数
-* extraMiddlewares(Array): 额外的中间件
+* suffixMiddlewares(Array): 额外的后置中间件
+* prefixMiddlewares(Array): 额外的前置中间件
 * onError(Function): 异步 action 内抛出的错误可以在这里统一处理
-* noLoadingModel(Boolean=false): 是否不注册 [loading model](https://github.com/tolerance-go/weappx/blob/master/docs/README.md#loading-model)
+* extraModels(Array): 额外注册的model
+
 
 ### `store.model(model:Object)`
 
@@ -31,7 +33,7 @@ model Attributes
 
 * `actions:Object` - 事件生成器
 
-  * `actionName:String-actionCreator:Function() => Any|Function({ take:Function, dispatcher:Object, state:Object, loading:Object, getState:Function, eventBus:Object })`
+  * `actionName:String-actionCreator:Function() => Any|Function({ take:Function, dispatcher:Object, state:Object, getState:Function, eventBus:Object })`
 
     action 生成器，actionName 如果和 namespace 下的 mutation 属性同名，将会覆盖自动生成的 actionCreator
 
@@ -41,7 +43,6 @@ model Attributes
     * take - 返回一个 promise 对象，可以对 eventBus 上的任何事件进行监听；对当前 namespace 下的 action 进行监听时，可以省略 namespace 前缀，否则会有提示信息打印
     * state - 是当前 namespace 的 model 数据
     * getState - 可以动态获得 rootState
-    * loading - 是全局的 loading model
     * eventBus - 参考 `store.eventBus`
 
 * `setups:Object|Function` - 启动器，所有函数在 launch 之后会调用
@@ -173,9 +174,22 @@ Page(
 );
 ```
 
-# loading model
+# loading plugin
 
-全局默认会注册一个 `namespace` 为 `loading` 的 model，结构如下：
+插件实际上返回的是一组 hook，管理异步状态时，推荐使用 `weapp-plugin-loading`，可以自动设置 effect 的 loading 状态
+
+```js
+import weappx from '../src/index';
+import createLoading from 'weapp-plugin-loading'
+
+const app = weappx();
+app.init({ connector });
+app.use(createLoading());
+app.model(...)
+app.start()
+```
+
+loading model 的结构如下：
 
 ```js
 {
