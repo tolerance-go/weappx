@@ -71,7 +71,10 @@ function connectPage(states = {}) {
     const onHide = PageOptions.onHide;
 
     const onStateChange = function() {
-      if (this.$hide) return;
+      if (this.$hide) {
+        this.$changedWhenHide = true;
+        return;
+      }
       const newStates = mapState(states);
       let hasChanged = false;
       Object.keys(newStates).forEach(k => {
@@ -100,7 +103,10 @@ function connectPage(states = {}) {
       },
       onShow() {
         this.$hide = false;
-        onStateChange.call(this);
+        if (this.$changedWhenHide) {
+          onStateChange.call(this);
+          this.$changedWhenHide = false;
+        }
         onShow && onShow.apply(this, arguments);
       },
       onHide() {
