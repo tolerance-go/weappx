@@ -19,7 +19,7 @@ mpvue 会在以后提供对应的 connector。
 
 原生小程序开发如果使用第三方脚手架支持引入 npm 依赖的话，直接通过 npm install 安装即可
 
-否则通过拷贝 npm 包中 `dist` 文件到实际项目中进行引用
+否则通过拷贝 git 项目中 `packages/xxx/dist` 中的 bundle 文件到实际项目中进行引用
 
 ```zsh
 npm install weappx
