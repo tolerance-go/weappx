@@ -16,7 +16,7 @@ function mapState(states) {
   return res;
 }
 
-function connectComponent(states = {}) {
+function connectComponent(states = {}, setData = 'setData') {
   states = normalizeMap(states);
   return function(ComponentOptions) {
     let unSubscribe = null;
@@ -39,7 +39,7 @@ function connectComponent(states = {}) {
           hasChanged = true;
         }
       });
-      hasChanged && this.setData(newStates);
+      hasChanged && this[setData](newStates);
     };
 
     return {
@@ -60,7 +60,7 @@ function connectComponent(states = {}) {
   };
 }
 
-function connectPage(states = {}) {
+function connectPage(states = {}, setData = 'setData') {
   states = normalizeMap(states);
   return function(PageOptions) {
     let unSubscribe = null;
@@ -84,7 +84,7 @@ function connectPage(states = {}) {
           hasChanged = true;
         }
       });
-      hasChanged && this.setData(newStates);
+      hasChanged && this[setData](newStates);
     };
 
     return {
