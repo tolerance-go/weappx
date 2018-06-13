@@ -27,31 +27,74 @@ if (buildCode === 1) {
   process.exit(1);
 }
 
-const cp = fork(
-  join(process.cwd(), 'node_modules/.bin/lerna'),
-  ['publish', '--skip-npm', '--conventional-commits'].concat(process.argv.slice(2)),
+const prompt = require('inquirer').createPromptModule();
+prompt([
   {
-    stdio: 'inherit',
-    cwd: process.cwd(),
-  }
-);
-cp.on('error', err => {
-  console.log(err);
-});
-cp.on('close', code => {
-  console.log('code', code);
-  if (code === 1) {
-    console.error('Failed: lerna publish');
-    process.exit(1);
-  }
-  publishToNpm();
-});
+    name: 'package',
+    type: 'checkbox',
+    message: '选择发布的包',
+    choices: updatedRepos,
+  },
+])
+  .then(input => {
+    if (!input.package.length) {
+      return console.log('no select npm prepublish!');
+    }
 
-function publishToNpm() {
-  console.log(`repos to publish: ${updatedRepos.join(', ')}`);
-  updatedRepos.forEach(repo => {
-    shell.cd(join(cwd, 'packages', repo));
-    console.log(`[${repo}] npm publish`);
-    shell.exec(`npm publish`);
+    const ignores = updatedRepos.filter(item => !input.package.includes(item));
+
+    const cp = fork(
+      join(process.cwd(), 'node_modules/.bin/lerna'),
+      ignores
+        .reduce(
+          (a, b) => {
+            a.push('--ignore');
+            a.push(b);
+            return a;
+          },
+          ['publish', '--skip-npm', '--conventional-commits']
+        )
+        .concat(process.argv.slice(2)),
+      {
+        stdio: 'inherit',
+        cwd: process.cwd(),
+      }
+    );
+    cp.on('error', err => {
+      console.log(err);
+    });
+    cp.on('close', code => {
+      console.log('code', code);
+      if (code === 1) {
+        console.error('Failed: lerna publish');
+        process.exit(1);
+      }
+
+      require('inquirer')
+        .createPromptModule()([
+          {
+            name: 'npm',
+            type: 'confirm',
+            message: '是否发布npm',
+          },
+        ])
+        .then(input => {
+          if (input.npm) {
+            publishToNpm();
+          }
+        });
+    });
+
+    function publishToNpm() {
+      console.log(`repos to publish: ${input.package.join(', ')}`);
+      input.package.forEach(repo => {
+        shell.cd(join(cwd, 'packages', repo));
+        console.log(`[${repo}] npm publish`);
+        shell.exec(`npm publish`);
+      });
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    process.exit(1);
   });
-}
