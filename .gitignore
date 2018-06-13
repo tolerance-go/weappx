@@ -7,7 +7,6 @@ node_modules
 # production
 /_book
 lib
-dist
 
 # misc
 .idea
