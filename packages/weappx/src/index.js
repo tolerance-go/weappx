@@ -67,11 +67,11 @@ function create() {
       if (!connector.hasOwnProperty(k)) continue;
       if (k.match(/^connect/i)) {
         const oldConnect = connector[k];
-        connector[k] = (maps = {}) => {
+        connector[k] = (maps = {}, ...other) => {
           Object.assign(maps, {
             dispatcher: () => this.dispatcher,
           });
-          return oldConnect(maps);
+          return oldConnect(maps, ...other);
         };
       }
     }

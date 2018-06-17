@@ -2193,6 +2193,10 @@ function create() {
         (function () {
           var oldConnect = connector[k];
           connector[k] = function () {
+            for (var _len = arguments.length, other = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+              other[_key - 1] = arguments[_key];
+            }
+
             var maps = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
             Object.assign(maps, {
@@ -2200,7 +2204,7 @@ function create() {
                 return _this.dispatcher;
               }
             });
-            return oldConnect(maps);
+            return oldConnect.apply(undefined, [maps].concat(other));
           };
         })();
       }
