@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/tolerance-go/wepyx/compare/weappx-weapp@0.2.0...weappx-weapp@0.2.1) (2018-06-18)
+
+
+### Bug Fixes
+
+* **weappx-weapp:** 修复 hasChanged 判断错误(object 内容在页面加载时会进行一次深拷贝) ([4599c6e](https://github.com/tolerance-go/wepyx/commit/4599c6e))
+
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/tolerance-go/wepyx/compare/weappx-weapp@0.1.2...weappx-weapp@0.2.0) (2018-06-13)
 
