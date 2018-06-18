@@ -1,4 +1,5 @@
 import { getStore, setStore } from './store';
+import isEqual from 'lodash.isequal';
 
 function normalizeMap(map) {
   return Array.isArray(map)
@@ -34,7 +35,7 @@ function connectComponent(states = {}, setData = 'setData') {
       let hasChanged = false;
       Object.keys(newStates).forEach(k => {
         const newV = newStates[k];
-        if (this.data[k] !== newV) {
+        if (!isEqual(this.data[k], newV)) {
           // 不相等
           hasChanged = true;
         }
@@ -79,7 +80,7 @@ function connectPage(states = {}, setData = 'setData') {
       let hasChanged = false;
       Object.keys(newStates).forEach(k => {
         const newV = newStates[k];
-        if (this.data[k] !== newV) {
+        if (!isEqual(this.data[k], newV)) {
           // 不相等
           hasChanged = true;
         }

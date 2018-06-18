@@ -4,5 +4,8 @@
   "description": "weappx to weapp connector.",
   "main": "lib/index.js",
   "author": "bzone <yarnbCoder@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "lodash.isequal": "^4.5.0"
+  }
 }
