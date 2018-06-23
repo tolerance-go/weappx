@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/tolerance-go/wepyx/compare/weappx@1.0.1...weappx@2.0.0) (2018-06-23)
+
+
+### Code Refactoring
+
+* store initialization moves outside ([78d571b](https://github.com/tolerance-go/wepyx/commit/78d571b))
+
+
+### BREAKING CHANGES
+
+* remove init api; remove connector params
+* dispatcher is no longer merge within the component
+
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/tolerance-go/wepyx/compare/weappx@1.0.0...weappx@1.0.1) (2018-06-17)
 
