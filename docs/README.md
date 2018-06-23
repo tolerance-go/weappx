@@ -2,13 +2,12 @@
 
 import weappx from 'weappx'
 
-### `store = weappx.init(options:Object)`
+### `store = weappx(options:Object)`
 
-初始化配置
+初始化实例
 
 options Attributes
 
-* connector(Object: { setStore, connectify }): 连接器，必传参数
 * suffixMiddlewares(Array): 额外的后置中间件
 * prefixMiddlewares(Array): 额外的前置中间件
 * onError(Function): 异步 action 内抛出的错误可以在这里统一处理
