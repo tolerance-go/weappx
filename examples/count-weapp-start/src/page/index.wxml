@@ -1,0 +1,13 @@
+view.container
+  view.stage 计数器数值：{{count}}
+  view
+    text 步数值：
+    input(
+      placeholder="请输入步数"
+      auto-focus
+      value='{{inputValue}}'
+      bindinput='inputChange'
+    )
+  view
+    button(bind:tap="plus") +
+    button(style='margin-left: 20rpx;' bind:tap='sub') -

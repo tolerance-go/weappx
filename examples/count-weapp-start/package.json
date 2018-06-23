@@ -1,0 +1,38 @@
+{
+  "private": true,
+  "scripts": {
+    "update": "npm i weapp-plugin-babel@latest weapp-plugin-eslint@latest weapp-plugin-less@latest weapp-plugin-pug@latest weapp-plugin-require@latest weapp-plugin-stylus@latest weapp-plugin-filter@latest weapp-plugin-jsmin@latest weapp-plugin-filemin@latest weapp-plugin-imgmin@latest weapp-plugin-postcss@latest -D"
+  },
+  "devDependencies": {
+    "autoprefixer": "^8.5.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^3.19.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "^7.1.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "prettier": "^1.12.1",
+    "weapp-plugin-babel": "^0.2.6",
+    "weapp-plugin-eslint": "^0.2.5",
+    "weapp-plugin-filemin": "^0.1.4",
+    "weapp-plugin-filter": "^0.1.5",
+    "weapp-plugin-imgmin": "^0.1.4",
+    "weapp-plugin-jsmin": "^0.1.4",
+    "weapp-plugin-less": "^0.3.5",
+    "weapp-plugin-postcss": "^0.1.3",
+    "weapp-plugin-pug": "^0.2.5",
+    "weapp-plugin-require": "^0.3.6",
+    "weapp-plugin-stylus": "^0.3.5"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "lodash": "4.17.5",
+    "weappx": "^2.0.0",
+    "weappx-weapp": "^0.2.1"
+  }
+}

@@ -78,10 +78,10 @@ export default class Index extends wepy.page {
       this.inputValue = Number(value)
     },
     plus() {
-      store.dispatcher.count.plus(this.inputValue);
+      app.dispatcher.count.plus(this.inputValue);
     },
     sub() {
-      store.dispatcher.count.sub(this.inputValue);
+      app.dispatcher.count.sub(this.inputValue);
     }
   };
 }

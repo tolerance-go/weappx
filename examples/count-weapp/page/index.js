@@ -40,11 +40,11 @@ Page(
     },
     plus() {
       const { inputValue } = this.data;
-      store.dispatcher.count.plus(inputValue);
+      app.dispatcher.count.plus(inputValue);
     },
     sub() {
       const { inputValue } = this.data;
-      store.dispatcher.count.sub(inputValue);
+      app.dispatcher.count.sub(inputValue);
     },
   })
 );

@@ -145,28 +145,28 @@ export default class Index extends wepy.page {
       this.inputValue = value;
     },
     removeTodo(index) {
-      store.dispatcher.todo.deleteTodo(index);
+      app.dispatcher.todo.deleteTodo(index);
     },
     completeTodo(index) {
-      store.dispatcher.todo.toggleTodo(index);
+      app.dispatcher.todo.toggleTodo(index);
     },
     editTodo(index) {
       this.textCaches[index] = this.todos[index].text
-      store.dispatcher.todo.toggleEditTodo(index)
+      app.dispatcher.todo.toggleEditTodo(index)
     },
     editTodoDone(index) {
-      store.dispatcher.todo.editTodo({index, text:this.textCaches[index]})
-      store.dispatcher.todo.toggleEditTodo(index)
+      app.dispatcher.todo.editTodo({index, text:this.textCaches[index]})
+      app.dispatcher.todo.toggleEditTodo(index)
     },
     addTodo() {
-      store.dispatcher.todo.addTodo(this.inputValue);
+      app.dispatcher.todo.addTodo(this.inputValue);
     },
     doneAll() {
-      store.dispatcher.todo.toggleAll(this.toDone)
+      app.dispatcher.todo.toggleAll(this.toDone)
       this.toDone = !this.toDone
     },
     clearDone() {
-      store.dispatcher.todo.clearCompleted()
+      app.dispatcher.todo.clearCompleted()
     }
   };
 }
