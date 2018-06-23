@@ -36,13 +36,11 @@
 <script>
 import wepy from 'wepy';
 import weappx from 'weappx';
-import connector from 'weappx-wepy';
+import connector from 'wepy-redux';
 
-const store = weappx()
+const app = weappx()
 
-store.init({ connector })
-
-store.model({
+app.model({
   namespace: 'count',
 
   state: {
@@ -59,7 +57,9 @@ store.model({
   }
 });
 
-store.start();
+const store = app.start()
+
+connector.setStore(store);
 
 @connector.connect({
   count: state => state.count.count
@@ -78,10 +78,10 @@ export default class Index extends wepy.page {
       this.inputValue = Number(value)
     },
     plus() {
-      this.dispatcher.count.plus(this.inputValue);
+      store.dispatcher.count.plus(this.inputValue);
     },
     sub() {
-      this.dispatcher.count.sub(this.inputValue);
+      store.dispatcher.count.sub(this.inputValue);
     }
   };
 }

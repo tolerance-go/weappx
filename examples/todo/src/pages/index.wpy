@@ -40,15 +40,13 @@
 <script>
 import wepy from 'wepy';
 import weappx from 'weappx';
-import connector from 'weappx-wepy';
+import connector from 'wepy-redux';
 
-const store = weappx()
-
-store.init({ connector })
+const app = weappx()
 
 const localField = 'STORAGE_KEY';
 
-store.model({
+app.model({
   namespace: 'todo',
 
   state: {
@@ -121,7 +119,9 @@ store.model({
   }
 });
 
-store.start();
+const store = app.start();
+
+connector.setStore(store)
 
 @connector.connect({
   todos: state => state.todo.todos
@@ -145,28 +145,28 @@ export default class Index extends wepy.page {
       this.inputValue = value;
     },
     removeTodo(index) {
-      this.dispatcher.todo.deleteTodo(index);
+      store.dispatcher.todo.deleteTodo(index);
     },
     completeTodo(index) {
-      this.dispatcher.todo.toggleTodo(index);
+      store.dispatcher.todo.toggleTodo(index);
     },
     editTodo(index) {
       this.textCaches[index] = this.todos[index].text
-      this.dispatcher.todo.toggleEditTodo(index)
+      store.dispatcher.todo.toggleEditTodo(index)
     },
     editTodoDone(index) {
-      this.dispatcher.todo.editTodo({index, text:this.textCaches[index]})
-      this.dispatcher.todo.toggleEditTodo(index)
+      store.dispatcher.todo.editTodo({index, text:this.textCaches[index]})
+      store.dispatcher.todo.toggleEditTodo(index)
     },
     addTodo() {
-      this.dispatcher.todo.addTodo(this.inputValue);
+      store.dispatcher.todo.addTodo(this.inputValue);
     },
     doneAll() {
-      this.dispatcher.todo.toggleAll(this.toDone)
+      store.dispatcher.todo.toggleAll(this.toDone)
       this.toDone = !this.toDone
     },
     clearDone() {
-      this.dispatcher.todo.clearCompleted()
+      store.dispatcher.todo.clearCompleted()
     }
   };
 }

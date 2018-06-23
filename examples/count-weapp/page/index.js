@@ -1,11 +1,9 @@
-import weappx from '../vendor/weappx/weappx.js';
 import connector from '../vendor/weappx-weapp/weappx-weapp.js';
+import weappx from '../vendor/weappx/weappx.js';
 
-const store = weappx();
+const app = weappx();
 
-store.init({ connector });
-
-store.model({
+app.model({
   namespace: 'count',
 
   state: {
@@ -22,12 +20,15 @@ store.model({
   },
 });
 
-store.start();
+const store = app.start();
+
+connector.setStore(store);
 
 Page(
   connector.connectPage({
     count: state => state.count.count,
   })({
+    store,
     data: {
       inputValue: 1,
     },
@@ -38,12 +39,12 @@ Page(
       });
     },
     plus() {
-      const { dispatcher, inputValue } = this.data;
-      dispatcher.count.plus(inputValue);
+      const { inputValue } = this.data;
+      store.dispatcher.count.plus(inputValue);
     },
     sub() {
-      const { dispatcher, inputValue } = this.data;
-      dispatcher.count.sub(inputValue);
+      const { inputValue } = this.data;
+      store.dispatcher.count.sub(inputValue);
     },
   })
 );
