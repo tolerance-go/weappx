@@ -2127,21 +2127,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var SPLIT = '/';
+var SEP = '/';
 
 var prefix = function prefix(name, propName) {
-  return '' + name + SPLIT + propName;
+  return '' + name + SEP + propName;
 };
-
-// const isEmpty = obj => {
-//   return !Object.keys(obj).length;
-// };
 
 /**
  * 用 immer 包装 reducer
- *
- * @param {any} cb
- * @returns
  */
 var produceWrapp = function produceWrapp(cb) {
   return function (state, action) {
@@ -2152,10 +2145,11 @@ var produceWrapp = function produceWrapp(cb) {
 };
 
 function create() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
   var app = {
     eventBus: _eventBus2.default,
     dispatcher: {},
-    init: init,
     model: model,
     use: use,
     models: models,
@@ -2170,48 +2164,18 @@ function create() {
     }
   };
 
-  var _composeDispatcher = {}; // 待注入到 thunk 的 dispatcher namespace maps
-  var _takes = {}; // 待注入到 thunk 的 take namespace maps
-  var _connector = void 0;
+  // 待注入到 thunk 的 dispatcher namespace maps
+  var _composeDispatcher = {};
+  // 待注入到 thunk 的 take namespace maps
+  var _takes = {};
   var _extraModels = [];
   var _suffixMiddlewares = [_tunk2.default, _actionTake2.default];
   var _prefixMiddlewares = [];
   var _extraEnhancers = []; // eslint-disable-line
 
+  use(options);
+
   return app;
-
-  function init(options) {
-    var _this = this;
-
-    var connector = options.connector;
-
-    (0, _assert2.default)(connector, '[weappx.init]:connector is required');
-
-    for (var k in connector) {
-      if (!connector.hasOwnProperty(k)) continue;
-      if (k.match(/^connect/i)) {
-        (function () {
-          var oldConnect = connector[k];
-          connector[k] = function () {
-            for (var _len = arguments.length, other = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-              other[_key - 1] = arguments[_key];
-            }
-
-            var maps = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-            Object.assign(maps, {
-              dispatcher: function dispatcher() {
-                return _this.dispatcher;
-              }
-            });
-            return oldConnect.apply(undefined, [maps].concat(other));
-          };
-        })();
-      }
-    }
-    _connector = connector;
-    use(options);
-  }
 
   function use(options) {
     (0, _assert2.default)((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object', '[app.use]: options type must be object');
@@ -2303,9 +2267,7 @@ function create() {
   }
 
   function start() {
-    var _this2 = this;
-
-    (0, _assert2.default)(_connector, '[weappx.start]:connector is required, please call [weappx.init] first');
+    var _this = this;
 
     _extraModels.forEach(function (m) {
       return model(m);
@@ -2318,35 +2280,35 @@ function create() {
     // 包装 actionCreator => dispatch
 
     var _loop = function _loop(namespace) {
-      if (!_this2._actions.hasOwnProperty(namespace)) return 'continue';
-      _this2.dispatcher[namespace] || (_this2.dispatcher[namespace] = {});
+      if (!_this._actions.hasOwnProperty(namespace)) return 'continue';
+      _this.dispatcher[namespace] || (_this.dispatcher[namespace] = {});
 
       var _loop2 = function _loop2(actionName) {
-        if (!_this2._actions[namespace].hasOwnProperty(actionName)) return 'continue';
+        if (!_this._actions[namespace].hasOwnProperty(actionName)) return 'continue';
 
-        _this2.dispatcher[namespace][actionName] = function () {
+        _this.dispatcher[namespace][actionName] = function () {
           var _actions$namespace;
 
-          return store.dispatch((_actions$namespace = _this2._actions[namespace])[actionName].apply(_actions$namespace, arguments));
+          return store.dispatch((_actions$namespace = _this._actions[namespace])[actionName].apply(_actions$namespace, arguments));
         };
       };
 
-      for (var actionName in _this2._actions[namespace]) {
-        var _ret3 = _loop2(actionName);
+      for (var actionName in _this._actions[namespace]) {
+        var _ret2 = _loop2(actionName);
 
-        if (_ret3 === 'continue') continue;
+        if (_ret2 === 'continue') continue;
       }
     };
 
     for (var namespace in this._actions) {
-      var _ret2 = _loop(namespace);
+      var _ret = _loop(namespace);
 
-      if (_ret2 === 'continue') continue;
+      if (_ret === 'continue') continue;
     }
 
     // compose global & inner dispatcher
     Object.keys(this._models).forEach(function (namespace) {
-      var dispatcher = _this2.dispatcher;
+      var dispatcher = _this.dispatcher;
 
       var innerDispatcher = dispatcher[namespace];
       var namespaces = Object.keys(dispatcher);
@@ -2392,10 +2354,7 @@ function create() {
       }
     }
 
-    _connector.setStore(store);
-
     this._store = store;
-
     return store;
   }
 }
@@ -4341,7 +4300,9 @@ var thunkMiddleware = function thunkMiddleware(_ref) {
         }).catch(function (error) {
           return app._effectsErrorDefaultHandle(error);
         });
+
         next(action);
+
         return action.payload;
       }
 
