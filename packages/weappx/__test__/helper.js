@@ -5,8 +5,3 @@ export const delay = timeout => {
     }, timeout);
   });
 };
-
-export const connector = {
-  connect: () => {},
-  setStore: () => {},
-};

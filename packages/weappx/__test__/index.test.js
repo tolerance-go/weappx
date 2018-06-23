@@ -1,11 +1,9 @@
 /* global test, expect, afterEach */
 import weappx from '../src/index';
-import { connector } from './helper';
 
 test('mode must be union', () => {
   expect(() => {
     const app = weappx();
-    app.init({ connector });
     app.model({
       namespace: 'n',
     });
@@ -17,7 +15,6 @@ test('mode must be union', () => {
 
 test('mutations', () => {
   const app = weappx();
-  app.init({ connector });
   app.model({
     namespace: 'n',
     state: {
@@ -36,7 +33,6 @@ test('mutations', () => {
 
 test('actions', () => {
   const app = weappx();
-  app.init({ connector });
   app.model({
     namespace: 'n',
     state: {
@@ -60,7 +56,6 @@ test('actions', () => {
 
 test('async actions', () => {
   const app = weappx();
-  app.init({ connector });
   app.model({
     namespace: 'n',
     state: {
@@ -98,7 +93,6 @@ test('async actions', () => {
 
 test('action meta', () => {
   const app = weappx();
-  app.init({ connector });
   app.model({
     namespace: 'n',
     state: {
@@ -129,7 +123,6 @@ test('action meta', () => {
 
 test('setups', done => {
   const app = weappx();
-  app.init({ connector });
   app.model({
     namespace: 'n',
     mutations: {
@@ -150,7 +143,6 @@ test('setups', done => {
 
 test('setups func', done => {
   const app = weappx();
-  app.init({ connector });
   app.model({
     namespace: 'n',
     setups: () => {
@@ -162,7 +154,6 @@ test('setups func', done => {
 
 test('take', done => {
   const app = weappx();
-  app.init({ connector });
   app.model({
     namespace: 'n',
     mutations: {
@@ -190,7 +181,6 @@ test('take', done => {
 
 test('action after', done => {
   const app = weappx();
-  app.init({ connector });
   app.model({
     namespace: 'n',
     state: {
@@ -222,7 +212,6 @@ test('action after', done => {
 
 test('mutations return new state', () => {
   const app = weappx();
-  app.init({ connector });
   app.model({
     namespace: 'n',
     state: {

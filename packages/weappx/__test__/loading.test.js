@@ -1,11 +1,10 @@
 /* global test, expect, afterEach */
 import weappx from '../src/index';
 import createLoading from '../../weappx-plugin-loading/src/index';
-import { delay, connector } from './helper';
+import { delay } from './helper';
 
 test('model loading', done => {
   const app = weappx();
-  app.init({ connector });
   app.use(createLoading());
   app.model({
     namespace: 'n',
