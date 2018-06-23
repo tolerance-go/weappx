@@ -6,10 +6,10 @@ import thunkMiddleware from './middlewares/tunk';
 import produce from 'immer';
 import assert from './utils/assert';
 
-const SPLIT = '/';
+const SEP = '/';
 
 const prefix = (name, propName) => {
-  return `${name}${SPLIT}${propName}`;
+  return `${name}${SEP}${propName}`;
 };
 
 /**
