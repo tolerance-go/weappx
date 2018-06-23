@@ -12,15 +12,8 @@ const prefix = (name, propName) => {
   return `${name}${SPLIT}${propName}`;
 };
 
-// const isEmpty = obj => {
-//   return !Object.keys(obj).length;
-// };
-
 /**
  * 用 immer 包装 reducer
- *
- * @param {any} cb
- * @returns
  */
 const produceWrapp = cb => {
   return (state, action) => {
