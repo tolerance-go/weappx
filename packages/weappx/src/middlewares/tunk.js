@@ -16,7 +16,9 @@ const thunkMiddleware = ({ dispatch, getState }) => next => action => {
       .catch(error => {
         return app._effectsErrorDefaultHandle(error);
       });
+
     next(action);
+
     return action.payload;
   }
 
