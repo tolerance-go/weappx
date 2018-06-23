@@ -38,6 +38,7 @@ npm install weappx
 * 上手简单，仅需要了解 4 个 api
 * 更易用的 action [派发方式](https://github.com/tolerance-go/wepyx/blob/master/docs/DISPATCHER.md)
 * 更简单的数据处理[copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)
+* 独立存在的事件中心
 * 强大的 hook 机制
 
 # Links
