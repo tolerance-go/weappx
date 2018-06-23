@@ -23,11 +23,10 @@ const produceWrapp = cb => {
   };
 };
 
-function create() {
+function create(options = {}) {
   const app = {
     eventBus,
     dispatcher: {},
-    init,
     model,
     use,
     models,
@@ -42,35 +41,18 @@ function create() {
     },
   };
 
-  const _composeDispatcher = {}; // 待注入到 thunk 的 dispatcher namespace maps
-  const _takes = {}; // 待注入到 thunk 的 take namespace maps
-  let _connector;
+  // 待注入到 thunk 的 dispatcher namespace maps
+  const _composeDispatcher = {};
+  // 待注入到 thunk 的 take namespace maps
+  const _takes = {};
   let _extraModels = [];
   let _suffixMiddlewares = [thunkMiddleware, actionTakeMiddleware];
   let _prefixMiddlewares = [];
   let _extraEnhancers = []; // eslint-disable-line
 
+  use(options);
+
   return app;
-
-  function init(options) {
-    const { connector } = options;
-    assert(connector, '[weappx.init]:connector is required');
-
-    for (let k in connector) {
-      if (!connector.hasOwnProperty(k)) continue;
-      if (k.match(/^connect/i)) {
-        const oldConnect = connector[k];
-        connector[k] = (maps = {}, ...other) => {
-          Object.assign(maps, {
-            dispatcher: () => this.dispatcher,
-          });
-          return oldConnect(maps, ...other);
-        };
-      }
-    }
-    _connector = connector;
-    use(options);
-  }
 
   function use(options) {
     assert(typeof options === 'object', '[app.use]: options type must be object');
@@ -144,8 +126,6 @@ function create() {
   }
 
   function start() {
-    assert(_connector, '[weappx.start]:connector is required, please call [weappx.init] first');
-
     _extraModels.forEach(m => model(m));
 
     const rootReducer = combineReducers(app._reducers);
@@ -217,10 +197,7 @@ function create() {
       }
     }
 
-    _connector.setStore(store);
-
     this._store = store;
-
     return store;
   }
 }
