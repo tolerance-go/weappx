@@ -134,46 +134,15 @@ Attributes
 
   * type - 事件类型
 
-# Connector
+# connector
 
-连接器是负责将 数据管理 和 组件框架进行数据绑定的重要部分
+连接器是负责将 数据模型 和 组件框架进行绑定工具；具体实现为从 weappx 生成 store，继而通过 `connector.setStore` 和 `connect` 完成数据绑定
 
 - [weapp-start](https://github.com/tolerance-go/weapp-start), [weapp原生小程序](https://developers.weixin.qq.com/miniprogram/dev/api/) <-> [weappx-weapp](https://github.com/tolerance-go/weappx/tree/master/packages/weappx-weapp)
 
 - [wepy](https://github.com/Tencent/wepy) <-> [wepy-redux](https://github.com/Tencent/wepy/tree/2.0.x/packages/wepy-redux)
 
-- [taro](https://github.com/NervJS/taro) <-> [taro-redux](https://github.com/NervJS/taro/tree/master/packages/taro-redux)
-
-### weappx-weapp
-
-有2个connect方法：`connectPage`, `connectComponent` 分布对应 Component 和 Page
-
-eg:
-```js
-Component(
-  connectComponent({
-    counter: 'counter',
-    userInfo: state => state.app.userInfo
-  })({
-    data: {
-      someData: {},
-      // counter,
-    },
-  })
-);
-
-Page(
-  connectPage({
-    counter: 'counter',
-    userInfo: state => state.app.userInfo
-  })({
-    data: {
-      someData: {},
-      // counter,
-    },
-  })
-);
-```
+- [taro](https://github.com/NervJS/taro) <-> [taro-redux](https://nervjs.github.io/taro/redux.html)
 
 # loading plugin
 

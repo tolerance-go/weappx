@@ -14,3 +14,32 @@ connector.setStore(store);
 
 export default app;
 ```
+
+有2个connect方法：`connectPage`, `connectComponent` 分布对应 Component 和 Page
+
+eg:
+```js
+Component(
+  connectComponent({
+    counter: 'counter',
+    userInfo: state => state.app.userInfo
+  })({
+    data: {
+      someData: {},
+      // counter,
+    },
+  })
+);
+
+Page(
+  connectPage({
+    counter: 'counter',
+    userInfo: state => state.app.userInfo
+  })({
+    data: {
+      someData: {},
+      // counter,
+    },
+  })
+);
+```
