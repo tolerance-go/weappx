@@ -31,7 +31,6 @@ npm install weappx
 * [todoMVC(wepy)](https://github.com/tolerance-go/wepyx/tree/master/examples/todo)
 * [count(weapp-start)](https://github.com/tolerance-go/wepyx/tree/master/examples/count-weapp-start)
 * [count(taro)](https://github.com/tolerance-go/wepyx/tree/master/examples/count-taro)
-* [count(mpvue)](https://github.com/vuejs/vuex/tree/dev/examples/counter)
 
 # Feature
 
