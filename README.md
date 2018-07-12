@@ -42,7 +42,8 @@ npm install weappx
 
 # Links
 
-* [Documentation](https://github.com/tolerance-go/wepyx/tree/master/docs/README.md)
+* [Guide](https://github.com/tolerance-go/wepyx/tree/master/docs/GUIDE.md)
+* [API](https://github.com/tolerance-go/wepyx/tree/master/docs/API.md)
 * [Update Log](https://github.com/tolerance-go/weappx/blob/master/packages/weappx/CHANGELOG.md)
 * [Contribution](https://github.com/tolerance-go/blog/issues/1#issue-313932480)
 
