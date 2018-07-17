@@ -80,7 +80,8 @@ model 作为数据的抽象单位，在一个应用中存在一个或者多个
     model 提供了修改状态的同步接口，主要是对 mode 状态进行修改，可以直接操作 state 本身，也允许返回一个数据结构来替换掉 model 内部的 state
 - actions
     
-    model 提供了修改状态的异步接口，如果和 mutations 同名，后者会覆盖掉前者；通常返回一个 async 函数，在内部进行请求数据，并继续调用 model 的其他接口（派发action）；actions 的另外一层含义是 actionCreator，视图层的某些重复逻辑，如原先派发 action 之前要对数据进行一个前置判断，而且多个地方都要这样做，可以将这部分逻辑移动到 actionCreator 里面，哪怕它只是创建一个同步 action，即 actionCreator 返回的是一个静态数据，而非 async 函数
+    actions 的含义是 actionCreator，它创建并返回的数据作为 redux action 的 payload；通常返回一个 async function，其内部进行异步操作，进而调用 dispatcher 派发 action 最终进入 mutations。同时它也可以封装创建 action 时重复的逻辑，仅仅返回一个静态数据。
+    
 - setups
     
     model 自身定义的钩子函数，可以是对象形式。在调用 app.start 进行初始化的时候，所有的 mode 注册的钩子会进行调用，常用目的如监听路由或者主动的首次拉取接口数据等操作都可以放在这里来做
