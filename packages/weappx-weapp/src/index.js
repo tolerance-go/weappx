@@ -22,13 +22,13 @@ function connectComponent(states = {}, setData = 'setData') {
   return function(ComponentOptions) {
     let unSubscribe = null;
 
-    // 生命周期函数，可以为函数，或一个在methods段中定义的方法名
-    const methods = ComponentOptions.methods || {};
-    const attached = methods.attached || ComponentOptions.attached;
-    const detached = methods.detached || ComponentOptions.detached;
+    // 生命周期函数，可以为函数，或一个在lifetimes段中定义的方法名
+	const lifetimes = ComponentOptions.lifetimes || {};
+    const attached = lifetimes.attached || ComponentOptions.attached;
+    const detached = lifetimes.detached || ComponentOptions.detached;
 
-    methods.attached && delete methods.attached;
-    methods.detached && delete methods.detached;
+    lifetimes.attached && delete lifetimes.attached;
+    lifetimes.detached && delete lifetimes.detached;
 
     const onStateChange = function() {
       const newStates = mapState(states);
@@ -46,17 +46,19 @@ function connectComponent(states = {}, setData = 'setData') {
     return {
       ...ComponentOptions,
       data: Object.assign(ComponentOptions.data || {}, mapState(states)),
-      attached() {
-        const store = getStore();
-        unSubscribe = store.subscribe(onStateChange.bind(this));
-        onStateChange.call(this);
-        attached && attached.apply(this, arguments);
-      },
-      detached() {
-        unSubscribe && unSubscribe();
-        unSubscribe = null;
-        detached && detached.apply(this, arguments);
-      },
+      lifetimes: Object.assign(ComponentOptions.lifetimes || {}, {
+		  attached() {
+			const store = getStore();
+			unSubscribe = store.subscribe(onStateChange.bind(this));
+			onStateChange.call(this);
+			attached && attached.apply(this, arguments);
+		  },
+		  detached() {
+			unSubscribe && unSubscribe();
+			unSubscribe = null;
+			detached && detached.apply(this, arguments);
+		  },
+	  })
     };
   };
 }
