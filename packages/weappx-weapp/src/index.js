@@ -23,7 +23,7 @@ function connectComponent(states = {}, setData = 'setData') {
     let unSubscribe = null;
 
     // 生命周期函数，可以为函数，或一个在lifetimes段中定义的方法名
-	const lifetimes = ComponentOptions.lifetimes || {};
+    const lifetimes = ComponentOptions.lifetimes || {};
     const attached = lifetimes.attached || ComponentOptions.attached;
     const detached = lifetimes.detached || ComponentOptions.detached;
 
@@ -47,18 +47,18 @@ function connectComponent(states = {}, setData = 'setData') {
       ...ComponentOptions,
       data: Object.assign(ComponentOptions.data || {}, mapState(states)),
       lifetimes: Object.assign(ComponentOptions.lifetimes || {}, {
-		  attached() {
-			const store = getStore();
-			unSubscribe = store.subscribe(onStateChange.bind(this));
-			onStateChange.call(this);
-			attached && attached.apply(this, arguments);
-		  },
-		  detached() {
-			unSubscribe && unSubscribe();
-			unSubscribe = null;
-			detached && detached.apply(this, arguments);
-		  },
-	  })
+        attached() {
+          const store = getStore();
+          unSubscribe = store.subscribe(onStateChange.bind(this));
+          onStateChange.call(this);
+          attached && attached.apply(this, arguments);
+        },
+        detached() {
+          unSubscribe && unSubscribe();
+          unSubscribe = null;
+          detached && detached.apply(this, arguments);
+        },
+      }),
     };
   };
 }
