@@ -24,8 +24,9 @@ function connectComponent(states = {}, setData = 'setData') {
 
     // 生命周期函数，可以为函数，或一个在methods段中定义的方法名
     const methods = ComponentOptions.methods || {};
-    const attached = methods.attached || ComponentOptions.attached;
-    const detached = methods.detached || ComponentOptions.detached;
+    const lifetimes = ComponentOptions.lifetimes || {};
+    const attached = lifetimes.attached || methods.attached || ComponentOptions.attached;
+    const detached = lifetimes.detached || methods.detached || ComponentOptions.detached;
 
     methods.attached && delete methods.attached;
     methods.detached && delete methods.detached;
@@ -45,6 +46,11 @@ function connectComponent(states = {}, setData = 'setData') {
 
     return {
       ...ComponentOptions,
+      lifetimes: {
+        ...lifetimes,
+        attached: undefined,
+        detached: undefined,
+      },
       data: Object.assign(ComponentOptions.data || {}, mapState(states)),
       attached() {
         const store = getStore();
@@ -66,10 +72,11 @@ function connectPage(states = {}, setData = 'setData') {
   return function(PageOptions) {
     let unSubscribe = null;
 
-    const onLoad = PageOptions.onLoad;
-    const onUnload = PageOptions.onUnload;
-    const onShow = PageOptions.onShow;
-    const onHide = PageOptions.onHide;
+    const pageLifetimes = PageOptions.pageLifetimes || {};
+    const onLoad = pageLifetimes.load || PageOptions.onLoad;
+    const onUnload = pageLifetimes.unload || PageOptions.onUnload;
+    const onShow = pageLifetimes.show || PageOptions.onShow;
+    const onHide = pageLifetimes.hide || PageOptions.onHide;
 
     const onStateChange = function() {
       if (this.$hide) {
@@ -90,6 +97,13 @@ function connectPage(states = {}, setData = 'setData') {
 
     return {
       ...PageOptions,
+      pageLifetimes: {
+        ...pageLifetimes,
+        load: undefined,
+        unload: undefined,
+        show: undefined,
+        hide: undefined,
+      },
       data: Object.assign(PageOptions.data || {}, mapState(states)),
       onLoad() {
         const store = getStore();
