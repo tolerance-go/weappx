@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/tolerance-go/wepyx/compare/weappx-weapp@0.2.1...weappx-weapp@0.2.2) (2018-09-29)
+
+
+### Bug Fixes
+
+* lifetimes higher priority ([#19](https://github.com/tolerance-go/wepyx/issues/19)) ([43318dd](https://github.com/tolerance-go/wepyx/commit/43318dd))
+
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/tolerance-go/wepyx/compare/weappx-weapp@0.2.0...weappx-weapp@0.2.1) (2018-06-18)
 
