@@ -15,6 +15,7 @@
     "lint": "eslint --ext .js --ext .less src __test__"
   },
   "jest": {
+    "testURL": "http://localhost/",
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/examples/",
